@@ -2701,10 +2701,13 @@
   <script>/* =====================================================================
    ĐỒNG BỘ DỮ LIỆU TEAM (10 người) qua Firebase Firestore — MIỄN PHÍ
    ---------------------------------------------------------------------
-   KHÔNG CẦN SỬA FILE NÀY. Cấu hình được nhập trực tiếp trong app:
-   mở app → bấm nút đám mây ☁ trên thanh header → dán firebaseConfig → Lưu.
-
-   (Vẫn hỗ trợ dán config sẵn vào window.FIREBASE_CONFIG bên dưới nếu muốn.)
+   Config đã tích hợp sẵn trong file (window.FIREBASE_CONFIG) nhưng KHÔNG tự
+   kết nối khi mở link — để link có lọt ra ngoài cũng không đồng bộ dữ liệu team.
+   Trên mỗi máy: mở app → bấm nút đám mây ☁ trên header → bấm nút ẩn
+   "firebaseConfig" (chữ nhỏ mờ phía dưới nút Lưu & Kết nối) → máy tự kết nối,
+   các lần mở sau tự động đồng bộ luôn, không cần bấm lại.
+   Máy nào đã từng đồng bộ trước đây vẫn giữ nguyên, không cần bấm lại.
+   (Vẫn hỗ trợ dán config khác vào ô bên dưới nếu muốn đổi project.)
 
    Dữ liệu luôn lưu local trước nên MẤT MẠNG VẪN DÙNG ĐƯỢC, có mạng tự đồng bộ.
    ===================================================================== */
@@ -2724,6 +2727,7 @@ window.FIREBASE_CONFIG = {
   var COLLECTION = 'team_state';          // 1 document / 1 key dữ liệu (bv_*)
   var META_KEY = 'bv_sync_meta';          // { key: timestampMs } lưu local
   var CFG_KEY = 'bv_firebase_config';     // config do người dùng dán trong app
+  var UNLOCK_KEY = 'bv_cfg_unlocked';     // máy này đã bấm nút ẩn "firebaseConfig"
   var DISABLE_KEY = 'bv_sync_disabled';   // bấm "Ngắt" → bỏ qua cả config nhúng sẵn trong file
   var DEVICE_KEY = 'bv_device_id';
   var SYNCED_PREFIX = 'bv_';             // chỉ đồng bộ các key của app
@@ -2739,7 +2743,10 @@ window.FIREBASE_CONFIG = {
   }
   var deviceId = getDeviceId();
 
-  // Config ưu tiên: người dùng dán trong app > config ghi sẵn trong file
+  // Config ưu tiên: người dùng dán trong app > config tích hợp sẵn (đã bấm nút ẩn)
+  // Config nhúng sẵn KHÔNG tự dùng khi mở link — tránh link lọt ra ngoài.
+  // Chỉ dùng khi máy này đã bấm nút ẩn "firebaseConfig", hoặc máy đã từng
+  // đồng bộ trước đây (giữ nguyên cho các máy trong tổ đang dùng tốt).
   function getConfig() {
     try { if (localStorage.getItem(DISABLE_KEY) === '1') return null; } catch (e) {}
     try {
@@ -2749,10 +2756,26 @@ window.FIREBASE_CONFIG = {
         if (o && o.apiKey && o.projectId) return o;
       }
     } catch (e) {}
+    var unlocked = false;
+    try { unlocked = localStorage.getItem(UNLOCK_KEY) === '1'; } catch (e) {}
+    if (!unlocked) {
+      try {
+        var meta = JSON.parse(localStorage.getItem(META_KEY) || '{}');
+        if (meta && Object.keys(meta).length) unlocked = true;
+      } catch (e) {}
+    }
+    if (!unlocked) return null;
     var c = window.FIREBASE_CONFIG || {};
     if (c.apiKey && c.projectId) return c;
     return null;
   }
+
+  // Nút ẩn "firebaseConfig": dùng config tích hợp sẵn trong file để kết nối.
+  // Chỉ cần bấm 1 lần trên mỗi máy; các lần mở sau tự động đồng bộ.
+  window.unlockEmbeddedConfig = function () {
+    try { localStorage.setItem(UNLOCK_KEY, '1'); localStorage.removeItem(DISABLE_KEY); } catch (e) {}
+    location.reload();
+  };
 
   function getMeta() {
     try { return JSON.parse(localStorage.getItem(META_KEY) || '{}'); } catch (e) { return {}; }
@@ -2872,7 +2895,8 @@ window.FIREBASE_CONFIG = {
       '      <li><b>Build → Firestore Database</b> → Create database → <b>Start in test mode</b> → vùng <b>asia-southeast1</b></li>' +
       '      <li><b>Build → Authentication</b> → Sign-in method → bật <b>Anonymous</b></li>' +
       '      <li>Bánh răng ⚙️ <b>Project settings</b> → <b>Your apps</b> → bấm <b>&lt;/&gt;</b> → Register app → copy khối <b>firebaseConfig</b></li>' +
-      '      <li>Config đã được cài sẵn trong app — mở lên là tự đồng bộ, không cần dán gì thêm. Chỉ dùng ô bên dưới khi muốn đổi sang project khác.</li>' +
+      '      <li>Config đã tích hợp sẵn trong app. Bấm nút <b>firebaseConfig</b> (chữ nhỏ mờ phía dưới) để kết nối — chỉ cần làm 1 lần trên mỗi máy, các lần sau mở lên tự đồng bộ.</li>' +
+      '      <li>Chỉ dùng ô dán bên dưới khi muốn đổi sang project Firebase khác.</li>' +
       '    </ol>' +
       '    <textarea id="sync-config-input" rows="6" placeholder=\'Dán khối firebaseConfig vào đây, ví dụ:\n{\n  apiKey: "AIza...",\n  authDomain: "ten-project.firebaseapp.com",\n  projectId: "ten-project",\n  appId: "1:123:web:abc"\n}\' class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-mono text-slate-800"></textarea>' +
       '    <div id="sync-config-error" class="hidden text-[11px] font-bold text-rose-600 bg-rose-50 border border-rose-200 rounded-xl px-3 py-2"></div>' +
@@ -2880,6 +2904,7 @@ window.FIREBASE_CONFIG = {
       '      <button onclick="saveSyncConfig()" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs active:scale-95"><i class="fa-solid fa-link mr-1"></i>Lưu &amp; Kết nối</button>' +
       (cfg ? '      <button onclick="disconnectSync()" class="px-4 py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl text-xs border border-rose-200 active:scale-95">Ngắt</button>' : '') +
       '    </div>' +
+      '    <button onclick="unlockEmbeddedConfig()" title="Dùng config tích hợp sẵn trong app để kết nối đồng bộ" class="w-full text-center text-[10px] text-slate-300 hover:text-slate-500 py-1.5 active:scale-95 transition">firebaseConfig</button>' +
       '    <div class="pt-2 border-t border-slate-200">' +
       '      <div class="text-[11px] font-bold text-slate-700 mb-1"><i class="fa-solid fa-key mr-1 text-amber-500"></i>Phân quyền xóa dữ liệu</div>' +
       '      <div id="sync-pin-status" class="text-[11px] mb-1.5"></div>' +
