@@ -407,26 +407,26 @@
                   <label class="block text-[10px] text-slate-500 font-medium">Áp suất trên (bar)</label>
                   <div class="flex items-center space-x-1">
                     <button onclick="adjustValue('vg-ap-tren', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
-                    <input type="number" step="0.1" id="vg-ap-tren" value="5.2" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <input type="number" step="0.1" id="vg-ap-tren" value="3.5" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
                     <button onclick="adjustValue('vg-ap-tren', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
                   </div>
                   <div class="flex space-x-1">
-                    <button onclick="setNumericValue('vg-ap-tren', 5.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">5.0</button>
-                    <button onclick="setNumericValue('vg-ap-tren', 5.2)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">5.2</button>
-                    <button onclick="setNumericValue('vg-ap-tren', 5.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">5.5</button>
+                    <button onclick="setNumericValue('vg-ap-tren', 4.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">4.0</button>
+                    <button onclick="setNumericValue('vg-ap-tren', 3.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">3.5</button>
+                    <button onclick="setNumericValue('vg-ap-tren', 3.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">3.0</button>
                   </div>
                 </div>
                 <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
                   <label class="block text-[10px] text-slate-500 font-medium">Áp suất dưới (bar)</label>
                   <div class="flex items-center space-x-1">
                     <button onclick="adjustValue('vg-ap-duoi', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
-                    <input type="number" step="0.1" id="vg-ap-duoi" value="2.8" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <input type="number" step="0.1" id="vg-ap-duoi" value="3.0" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
                     <button onclick="adjustValue('vg-ap-duoi', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
                   </div>
                   <div class="flex space-x-1">
                     <button onclick="setNumericValue('vg-ap-duoi', 2.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">2.5</button>
-                    <button onclick="setNumericValue('vg-ap-duoi', 2.8)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">2.8</button>
-                    <button onclick="setNumericValue('vg-ap-duoi', 3.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">3.0</button>
+                    <button onclick="setNumericValue('vg-ap-duoi', 3.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">3.0</button>
+                    <button onclick="setNumericValue('vg-ap-duoi', 3.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">3.5</button>
                   </div>
                 </div>
               </div>
@@ -7302,7 +7302,7 @@ ${isChief() ? `
     function initCnPumps() { ['11', '12', '13'].forEach(applyCnPumpState); }
     function cnPumpText(id) {
       const label = '1.' + id.slice(-1);
-      if (!cnPumpRun[id]) return 'Bơm ' + label + ': Không chọn';
+      if (!cnPumpRun[id]) return 'Bơm ' + label + ': Không chạy';
       const v = document.getElementById('p-cn-' + id)?.value;
       return 'Bơm ' + label + ': ' + (v ? v + ' bar' : 'Không chọn');
     }
@@ -7622,13 +7622,15 @@ TỔ VẬN HÀNH - NƯỚC
         const tdsZ1 = roZoneVal('sau', 'z1'), tdsZ3 = roZoneVal('sau', 'z3');
         const worstRO = roTdsWorst();
         const roStatus = worstRO && worstRO.sau >= 30 ? `CẢNH BÁO ${worstRO.zone} VƯỢT NGƯỠNG` : 'Đạt chuẩn chạy thận < 30 ppm';
+        const vgTren = document.getElementById('vg-ap-tren')?.value || '3.5';
+        const vgDuoi = document.getElementById('vg-ap-duoi')?.value || '3.0';
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:
 ` +
           `- Bể ngầm 800 m³: Mức nước 75%, van phao cơ tự động mở tốt.
 ` +
           `- Cụm 4 bể composite mái T12: Đầy nước, phao điện ngắt tốt.
 ` +
-          `- Áp lực bơm sinh hoạt: Đạt 4.5 bar ổn định; van giảm áp tầng 6 đạt áp trên 5.2 / dưới 2.8 bar.
+          `- Áp lực bơm sinh hoạt: Đạt 4.5 bar ổn định; van giảm áp tầng 6 đạt áp trên ${vgTren} / dưới ${vgDuoi} bar.
 ` +
           `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).
 
@@ -9780,7 +9782,7 @@ TỔ VẬN HÀNH - NƯỚC
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:\n` +
           `- Bể ngầm 800 m³: Mức nước ${beNgam}, van phao cơ tự động mở tốt.\n` +
           `- Cụm 4 bể composite mái T12: Đầy nước, phao điện ngắt tốt.\n` +
-          `- Áp lực bơm sinh hoạt GĐ1: ${pumpTxt}; van giảm áp tầng 6 (trên ${document.getElementById('vg-ap-tren')?.value || '5.2'} bar / dưới ${document.getElementById('vg-ap-duoi')?.value || '2.8'} bar).\n` +
+          `- Áp lực bơm sinh hoạt GĐ1: ${pumpTxt}; van giảm áp tầng 6 (trên ${document.getElementById('vg-ap-tren')?.value || '3.5'} bar / dưới ${document.getElementById('vg-ap-duoi')?.value || '3.0'} bar).\n` +
           `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).\n\n`;
       }
 
