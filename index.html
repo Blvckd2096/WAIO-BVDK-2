@@ -153,8 +153,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
         </div>
       </div>
       <div class="flex items-center space-x-1.5 shrink-0">
-        <button onclick="openSyncConfigModal()" title="Cài đặt đồng bộ team" class="px-2 py-1 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-[11px] flex items-center space-x-1 border border-slate-200 active:scale-95 transition"><i class="fa-solid fa-cloud text-xs text-blue-500"></i></button>
-        <span id="sync-status" class="px-2 py-1 rounded-xl bg-slate-100 text-slate-600 font-bold text-[10.5px] flex items-center space-x-1.5 border border-slate-200" title="Trạng thái đồng bộ"><span class="sync-dot w-2 h-2 rounded-full bg-slate-400"></span><span class="sync-text">...</span></span>
+        <button id="sync-status" onclick="openSyncConfigModal()" title="Trạng thái đồng bộ — bấm để cài đặt" class="relative w-7 h-7 rounded-full bg-slate-100 hover:bg-slate-200 border border-slate-200 flex items-center justify-center active:scale-95 transition shrink-0"><i class="fa-solid fa-cloud text-[11px] text-blue-500"></i><span class="sync-dot absolute top-0 right-0 w-2.5 h-2.5 rounded-full bg-slate-400 border-2 border-white"></span><span class="sync-text hidden">...</span></button>
         <button onclick="openPreviewReportModal()" class="px-2 py-1 rounded-xl bg-indigo-50 hover:bg-indigo-100 text-indigo-700 font-bold text-[11px] flex items-center space-x-1 border border-indigo-200 active:scale-95 transition shadow-sm" title="Xem trước báo cáo ca trực">
           <i class="fa-solid fa-eye text-xs"></i>
           <span>Xem trước</span>
@@ -861,7 +860,10 @@ Check your Browserslist config to be sure that your targets are set up correctly
 
       <!-- 5. Lịch sử các ca gần nhất -->
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
-        <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider mb-2">Nhật Ký Các Ca Gần Nhất</h4>
+        <div class="flex items-center justify-between mb-2">
+          <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider">Nhật Ký Các Ca Gần Nhất</h4>
+          <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllChemicalHistory()">Xem tất cả</span>
+        </div>
         <div id="chemical-history-list" class="space-y-2 text-xs"></div>
       </div>
     </section>
@@ -1533,9 +1535,6 @@ Check your Browserslist config to be sure that your targets are set up correctly
         <div>
           <div class="flex items-center space-x-2">
             <h3 class="font-extrabold text-slate-900 text-sm">SỔ NHẬT KÝ KIỂM TRA & THEO DÕI CA TRỰC TOÀN VIỆN</h3>
-            <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-indigo-50 text-indigo-700 border border-indigo-200">
-              <i class="fa-solid fa-arrows-left-right mr-1"></i>Khổ A4 Nằm Ngang (Landscape)
-            </span>
           </div>
           <p class="text-[10px] text-slate-500">Nhật ký giám sát thông số XLNT, Cấp nước, RO, Bơm TNT, Bể tách mỡ</p>
         </div>
@@ -1581,6 +1580,20 @@ Check your Browserslist config to be sure that your targets are set up correctly
       </div>
 
       <div id="all-history-container" class="flex-1 overflow-y-auto space-y-2 text-xs"></div>
+    </div>
+  </div>
+
+  <!-- MODAL: XEM TẤT CẢ NHẬT KÝ CÁC CA (TIÊU HAO HÓA CHẤT) -->
+  <div id="modal-all-chem-history" class="fixed inset-0 z-50 modal-backdrop hidden flex items-center justify-center p-3">
+    <div class="bg-white rounded-3xl w-full max-w-3xl p-5 shadow-2xl space-y-3 max-h-[90vh] flex flex-col">
+      <div class="flex items-center justify-between border-b pb-2.5">
+        <div>
+          <h3 class="font-extrabold text-slate-900 text-sm">NHẬT KÝ CÁC CA TRỰC — TIÊU HAO HÓA CHẤT</h3>
+          <p class="text-[10px] text-slate-500">Toàn bộ các ca đã lưu, mới nhất lên đầu</p>
+        </div>
+        <button onclick="closeModal('modal-all-chem-history')" class="w-8 h-8 rounded-full bg-slate-100 text-slate-500 flex items-center justify-center font-bold">✕</button>
+      </div>
+      <div id="all-chem-history-container" class="flex-1 overflow-y-auto space-y-2 text-xs"></div>
     </div>
   </div>
 
@@ -2554,6 +2567,7 @@ window.FIREBASE_CONFIG = {
   var COLLECTION = 'team_state';          // 1 document / 1 key dữ liệu (bv_*)
   var META_KEY = 'bv_sync_meta';          // { key: timestampMs } lưu local
   var CFG_KEY = 'bv_firebase_config';     // config do người dùng dán trong app
+  var DISABLE_KEY = 'bv_sync_disabled';   // bấm "Ngắt" → bỏ qua cả config nhúng sẵn trong file
   var DEVICE_KEY = 'bv_device_id';
   var SYNCED_PREFIX = 'bv_';             // chỉ đồng bộ các key của app
 
@@ -2570,6 +2584,7 @@ window.FIREBASE_CONFIG = {
 
   // Config ưu tiên: người dùng dán trong app > config ghi sẵn trong file
   function getConfig() {
+    try { if (localStorage.getItem(DISABLE_KEY) === '1') return null; } catch (e) {}
     try {
       var raw = localStorage.getItem(CFG_KEY);
       if (raw) {
@@ -2589,7 +2604,7 @@ window.FIREBASE_CONFIG = {
     try { localStorage.setItem(META_KEY, JSON.stringify(meta)); } catch (e) {}
   }
 
-  // --- Trạng thái hiển thị trên header ---
+  // --- Trạng thái hiển thị trên header (nút gọn: icon mây + chấm màu) ---
   function setStatus(mode) {
     var el = document.getElementById('sync-status');
     if (!el) return;
@@ -2601,11 +2616,12 @@ window.FIREBASE_CONFIG = {
       online:    ['bg-emerald-400', 'Đã đồng bộ'],
       offline:   ['bg-amber-400', 'Ngoại tuyến (lưu máy)']
     }[mode] || ['bg-slate-400', ''];
-    if (dot) dot.className = 'sync-dot w-2 h-2 rounded-full ' + conf[0];
+    if (dot) {
+      ['bg-slate-400', 'bg-amber-400', 'bg-emerald-400', 'animate-pulse'].forEach(function (c) { dot.classList.remove(c); });
+      conf[0].split(' ').forEach(function (c) { if (c) dot.classList.add(c); });
+    }
     if (txt) txt.textContent = conf[1];
-    el.title = mode === 'online'
-      ? 'Dữ liệu đang đồng bộ giữa các máy trong tổ'
-      : 'Bấm nút đám mây ☁ để bật đồng bộ team';
+    el.title = conf[1] + ' — bấm để cài đặt đồng bộ';
   }
 
   // --- Refresh toàn bộ giao diện sau khi nhận dữ liệu mới ---
@@ -2669,7 +2685,7 @@ window.FIREBASE_CONFIG = {
     try {
       for (var i = 0; i < localStorage.length; i++) {
         var k = localStorage.key(i);
-        if (k && k.indexOf(SYNCED_PREFIX) === 0 && k !== META_KEY && k !== DEVICE_KEY && k !== CFG_KEY && !seen[k]) {
+        if (k && k.indexOf(SYNCED_PREFIX) === 0 && k !== META_KEY && k !== DEVICE_KEY && k !== CFG_KEY && k !== DISABLE_KEY && !seen[k]) {
           window.__bvCloudSave(k);
         }
       }
@@ -2749,12 +2765,12 @@ window.FIREBASE_CONFIG = {
       }
       return;
     }
-    try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); } catch (e) {}
+    try { localStorage.setItem(CFG_KEY, JSON.stringify(cfg)); localStorage.removeItem(DISABLE_KEY); } catch (e) {}
     location.reload(); // nạp lại để kết nối với config mới
   };
 
   window.disconnectSync = function () {
-    try { localStorage.removeItem(CFG_KEY); } catch (e) {}
+    try { localStorage.removeItem(CFG_KEY); localStorage.setItem(DISABLE_KEY, '1'); } catch (e) {}
     location.reload();
   };
 
@@ -4642,32 +4658,92 @@ window.FIREBASE_CONFIG = {
       showToast(`Đã lưu tiêu hao và TỰ ĐỘNG TRỪ TỒN KHO cho ${totalDeductedCount} loại hóa chất!`);
     }
 
+    // --- Phân trang dùng chung cho Nhật ký & Lịch sử kiểm tra: 10 mục/trang ---
+    const HIST_PAGE_SIZE = 10;
+    let inspHistPage = 1;
+    let chemHistPage = 1;
+
+    function histPagerHtml(kind, page, totalPages) {
+      if (totalPages <= 1) return '';
+      return '<div class="flex items-center justify-center gap-2 pt-1.5">' +
+        '<button onclick="histGoPage(\'' + kind + '\',' + (page - 1) + ')" ' + (page <= 1 ? 'disabled' : '') + ' class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] font-bold text-slate-600 active:scale-95 disabled:opacity-40">‹ Trước</button>' +
+        '<span class="text-[11px] font-bold text-slate-500">Trang ' + page + '/' + totalPages + '</span>' +
+        '<button onclick="histGoPage(\'' + kind + '\',' + (page + 1) + ')" ' + (page >= totalPages ? 'disabled' : '') + ' class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] font-bold text-slate-600 active:scale-95 disabled:opacity-40">Tiếp ›</button>' +
+        '</div>';
+    }
+
+    function histGoPage(kind, page) {
+      if (kind === 'insp') { inspHistPage = page; renderInspectionHistory(); }
+      else { chemHistPage = page; renderChemicalHistory(); }
+    }
+
+    function chemHistCard(l) {
+      const summaryArr = [];
+      if (l.consumption) {
+        for (const [cId, val] of Object.entries(l.consumption)) {
+          if (val > 0) {
+            const chem = chemicalsList.find(x => x.id === cId);
+            summaryArr.push(`${chem ? chem.name.split(' ')[0] : cId}: ${val}`);
+          }
+        }
+      }
+      return `
+        <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+          <div class="flex items-center justify-between font-bold text-slate-800">
+            <span>${formatDDMMYY(l.date)} (${l.shift})</span>
+            <span class="text-purple-700">Lưu lượng: ~${l.diff || 220} m³</span>
+          </div>
+          <div class="text-[11px] text-slate-600 truncate">
+            ${summaryArr.length > 0 ? summaryArr.join(' | ') : 'Tiêu hao định mức'}
+          </div>
+          <div class="text-[10px] text-slate-400 italic">${l.notes}</div>
+        </div>
+      `;
+    }
+
     function renderChemicalHistory() {
       const container = document.getElementById('chemical-history-list');
       if (!container) return;
-      container.innerHTML = chemicalHistory.slice(0, 3).map(l => {
-        const summaryArr = [];
-        if (l.consumption) {
-          for (const [cId, val] of Object.entries(l.consumption)) {
-            if (val > 0) {
-              const chem = chemicalsList.find(x => x.id === cId);
-              summaryArr.push(`${chem ? chem.name.split(' ')[0] : cId}: ${val}`);
+      if (!chemicalHistory || chemicalHistory.length === 0) {
+        container.innerHTML = '<div class="text-slate-400 py-3 text-center">Chưa có nhật ký ca nào</div>';
+        return;
+      }
+      const totalPages = Math.max(1, Math.ceil(chemicalHistory.length / HIST_PAGE_SIZE));
+      if (chemHistPage > totalPages) chemHistPage = totalPages;
+      if (chemHistPage < 1) chemHistPage = 1;
+      const items = chemicalHistory.slice((chemHistPage - 1) * HIST_PAGE_SIZE, chemHistPage * HIST_PAGE_SIZE);
+      container.innerHTML = items.map(chemHistCard).join('') + histPagerHtml('chem', chemHistPage, totalPages);
+    }
+
+    function viewAllChemicalHistory() {
+      const container = document.getElementById('all-chem-history-container');
+      if (!container) return;
+      if (!chemicalHistory || chemicalHistory.length === 0) {
+        container.innerHTML = '<div class="text-slate-400 py-4 text-center">Chưa có nhật ký ca nào</div>';
+      } else {
+        container.innerHTML = chemicalHistory.map(l => {
+          const summaryArr = [];
+          if (l.consumption) {
+            for (const [cId, val] of Object.entries(l.consumption)) {
+              if (val > 0) {
+                const chem = chemicalsList.find(x => x.id === cId);
+                summaryArr.push(`${chem ? chem.name : cId}: ${val}`);
+              }
             }
           }
-        }
-        return `
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
-            <div class="flex items-center justify-between font-bold text-slate-800">
-              <span>${formatDDMMYY(l.date)} (${l.shift})</span>
-              <span class="text-purple-700">Lưu lượng: ~${l.diff || 220} m³</span>
+          return `
+            <div class="p-3 rounded-2xl bg-slate-50 border border-slate-200 space-y-1">
+              <div class="flex items-center justify-between font-bold text-slate-900">
+                <span>${formatDDMMYY(l.date)} (${l.shift})</span>
+                <span class="text-purple-700 text-xs">Lưu lượng: ~${l.diff || 220} m³</span>
+              </div>
+              <div class="text-xs text-slate-700">${summaryArr.length > 0 ? summaryArr.join(' | ') : 'Tiêu hao định mức'}</div>
+              ${l.notes ? `<div class="text-[11px] text-slate-500 italic">"${l.notes}"</div>` : ''}
             </div>
-            <div class="text-[11px] text-slate-600 truncate">
-              ${summaryArr.length > 0 ? summaryArr.join(' | ') : 'Tiêu hao định mức'}
-            </div>
-            <div class="text-[10px] text-slate-400 italic">${l.notes}</div>
-          </div>
-        `;
-      }).join('');
+          `;
+        }).join('');
+      }
+      openModal('modal-all-chem-history');
     }
 
     // --- XUẤT BÁO CÁO & XUẤT EXCEL KHO HÓA CHẤT CHUẨN NGHỊ ĐỊNH 30/2020/NĐ-CP ---
@@ -6116,14 +6192,8 @@ window.FIREBASE_CONFIG = {
       showToast(`Đã lưu nhật ký kiểm tra [${systemName}] thành công!`);
     }
 
-    function renderInspectionHistory() {
-      const container = document.getElementById('inspection-history-list');
-      if (!container) return;
-      if (!inspectionHistory || inspectionHistory.length === 0) {
-        container.innerHTML = '<div class="text-slate-400 py-3 text-center">Chưa có bản ghi kiểm tra nào</div>';
-        return;
-      }
-      container.innerHTML = inspectionHistory.slice(0, 3).map(item => `
+    function inspHistCard(item) {
+      return `
         <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 flex items-start justify-between">
           <div class="space-y-0.5">
             <div class="flex items-center space-x-1.5">
@@ -6138,7 +6208,21 @@ window.FIREBASE_CONFIG = {
             item.rating.includes('Xấu') || item.rating.includes('Cảnh báo') ? 'bg-rose-100 text-rose-800' : 'bg-slate-200 text-slate-700'
           }">${item.rating}</span>
         </div>
-      `).join('');
+      `;
+    }
+
+    function renderInspectionHistory() {
+      const container = document.getElementById('inspection-history-list');
+      if (!container) return;
+      if (!inspectionHistory || inspectionHistory.length === 0) {
+        container.innerHTML = '<div class="text-slate-400 py-3 text-center">Chưa có bản ghi kiểm tra nào</div>';
+        return;
+      }
+      const totalPages = Math.max(1, Math.ceil(inspectionHistory.length / HIST_PAGE_SIZE));
+      if (inspHistPage > totalPages) inspHistPage = totalPages;
+      if (inspHistPage < 1) inspHistPage = 1;
+      const items = inspectionHistory.slice((inspHistPage - 1) * HIST_PAGE_SIZE, inspHistPage * HIST_PAGE_SIZE);
+      container.innerHTML = items.map(inspHistCard).join('') + histPagerHtml('insp', inspHistPage, totalPages);
     }
 
     function viewAllInspectionHistory() {
