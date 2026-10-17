@@ -41,6 +41,7 @@
     .chip-btn:active {
       transform: scale(0.95);
     }
+    .opacity-40 { opacity: 0.4; }
     .modal-backdrop {
       background-color: rgba(15, 23, 42, 0.65);
       backdrop-filter: blur(4px);
@@ -162,41 +163,39 @@
             <span class="text-[10px] bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full font-bold">QCVN 28:2010</span>
           </div>
 
-          <div class="space-y-1.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+          <div class="space-y-1 p-2 rounded-xl bg-slate-50 border border-slate-100">
             <div class="flex justify-between items-center text-xs">
-              <span class="font-bold text-slate-700">Chỉ số pH (Chuẩn: 6.4 - 7.8)</span>
+              <span class="font-bold text-slate-700">pH (Chuẩn: 6.4 - 7.8)</span>
               <span id="ph-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Đạt</span>
             </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="adjustValue('val-ph', -0.1, 1)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">-</button>
-              <input type="number" step="0.1" id="val-ph" value="7.2" oninput="debouncedValidateMetrics()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1.5 text-center text-sm font-bold text-slate-800">
-              <button onclick="adjustValue('val-ph', 0.1, 1)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">+</button>
+            <div class="flex items-center space-x-1.5">
+              <button onclick="adjustValue('val-ph', -0.1, 1)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">-</button>
+              <input type="number" step="0.1" id="val-ph" value="7.2" oninput="debouncedValidateMetrics()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+              <button onclick="adjustValue('val-ph', 0.1, 1)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">+</button>
             </div>
-            <div class="flex space-x-1.5 text-[11px]">
-              <span class="text-slate-400 self-center text-[10px]">Gợi ý:</span>
-              <button onclick="setNumericValue('val-ph', 6.8)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">6.8</button>
-              <button onclick="setNumericValue('val-ph', 7.0)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">7.0</button>
-              <button onclick="setNumericValue('val-ph', 7.2)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-blue-600 font-bold border-blue-300">7.2</button>
-              <button onclick="setNumericValue('val-ph', 7.5)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">7.5</button>
+            <div class="flex space-x-1 text-[10px]">
+              <button onclick="setNumericValue('val-ph', 6.8)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">6.8</button>
+              <button onclick="setNumericValue('val-ph', 7.0)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">7.0</button>
+              <button onclick="setNumericValue('val-ph', 7.2)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-blue-600 font-bold border-blue-300">7.2</button>
+              <button onclick="setNumericValue('val-ph', 7.5)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">7.5</button>
             </div>
           </div>
 
-          <div class="space-y-1.5 p-2.5 rounded-xl bg-slate-50 border border-slate-100">
+          <div class="space-y-1 p-2 rounded-xl bg-slate-50 border border-slate-100">
             <div class="flex justify-between items-center text-xs">
-              <span class="font-bold text-slate-700">Chỉ số TSS (Chuẩn: &lt; 100 mg/l)</span>
+              <span class="font-bold text-slate-700">TSS (Chuẩn: &lt; 100 mg/l)</span>
               <span id="tss-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Đạt</span>
             </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="adjustValue('val-tss', -5, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">-</button>
-              <input type="number" id="val-tss" value="45" oninput="debouncedValidateMetrics()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1.5 text-center text-sm font-bold text-slate-800">
-              <button onclick="adjustValue('val-tss', 5, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">+</button>
+            <div class="flex items-center space-x-1.5">
+              <button onclick="adjustValue('val-tss', -5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">-</button>
+              <input type="number" id="val-tss" value="45" oninput="debouncedValidateMetrics()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+              <button onclick="adjustValue('val-tss', 5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 active:bg-slate-100">+</button>
             </div>
-            <div class="flex space-x-1.5 text-[11px]">
-              <span class="text-slate-400 self-center text-[10px]">Gợi ý:</span>
-              <button onclick="setNumericValue('val-tss', 35)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">35</button>
-              <button onclick="setNumericValue('val-tss', 45)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-blue-600 font-bold border-blue-300">45</button>
-              <button onclick="setNumericValue('val-tss', 65)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">65</button>
-              <button onclick="setNumericValue('val-tss', 85)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">85</button>
+            <div class="flex space-x-1 text-[10px]">
+              <button onclick="setNumericValue('val-tss', 35)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">35</button>
+              <button onclick="setNumericValue('val-tss', 45)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-blue-600 font-bold border-blue-300">45</button>
+              <button onclick="setNumericValue('val-tss', 65)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">65</button>
+              <button onclick="setNumericValue('val-tss', 85)" class="chip-btn px-1.5 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">85</button>
             </div>
           </div>
 
@@ -233,12 +232,15 @@
           <div class="space-y-2 text-xs">
             <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50">
               <span class="font-medium text-slate-700">Máy thổi khí bể vi sinh:</span>
-              <select id="xlnt-blower" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-blue-700">
-                <option>Máy 1 + Máy 2</option>
-                <option>Máy 2 + Máy 3</option>
-                <option>Máy 3 + Máy 4</option>
-                <option>Máy 1 + Máy 4</option>
-              </select>
+              <div class="flex items-center space-x-1">
+                <select id="xlnt-blower" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-bold text-blue-700 min-w-0">
+                  <option>Máy 1 + Máy 2</option>
+                  <option>Máy 2 + Máy 3</option>
+                  <option>Máy 3 + Máy 4</option>
+                  <option>Máy 1 + Máy 4</option>
+                </select>
+                <button onclick="manageOptionList('blower')" title="Sửa / thêm / bớt lựa chọn" class="chief-only w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-500 text-xs shrink-0"><i class="fa-solid fa-pen"></i></button>
+              </div>
             </div>
             <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50">
               <span class="font-medium text-slate-700">Bơm hút màng MBR:</span>
@@ -249,11 +251,14 @@
             </div>
             <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50">
               <span class="font-medium text-slate-700">Chu kỳ lọc / Rửa màng:</span>
-              <select id="xlnt-mbr-cycle" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold">
-                <option>Lọc 1 - Rửa 1 (Bình thường)</option>
-                <option>Lọc 2 - Rửa 2</option>
-                <option>Đang CIP hóa chất</option>
-              </select>
+              <div class="flex items-center space-x-1">
+                <select id="xlnt-mbr-cycle" class="bg-white border border-slate-200 rounded-lg px-2 py-1 text-xs font-semibold min-w-0">
+                  <option>Lọc 1 - Rửa 1 (Bình thường)</option>
+                  <option>Lọc 2 - Rửa 2</option>
+                  <option>Đang CIP hóa chất</option>
+                </select>
+                <button onclick="manageOptionList('cycle')" title="Sửa / thêm / bớt lựa chọn" class="chief-only w-7 h-7 rounded-lg bg-white border border-slate-200 text-slate-500 text-xs shrink-0"><i class="fa-solid fa-pen"></i></button>
+              </div>
             </div>
             <div class="flex items-center justify-between p-2 rounded-xl bg-slate-50">
               <span class="font-medium text-slate-700">Mực nước bể điều hòa / gom:</span>
@@ -351,46 +356,79 @@
               </div>
             </div>
 
-            <!-- Áp lực bơm cấp sinh hoạt -->
+            <!-- Áp lực từng bơm cấp sinh hoạt -->
             <div class="p-2.5 rounded-xl bg-slate-50 space-y-1.5">
               <div class="flex justify-between items-center">
-                <span class="font-bold text-slate-700">Áp lực bơm sinh hoạt GĐ1 (Đồng hồ đo bar):</span>
+                <span class="font-bold text-slate-700">Áp lực từng bơm sinh hoạt GĐ1 (bar):</span>
                 <span class="text-[10px] text-slate-400">Chuẩn: 4.2 - 4.8 bar</span>
               </div>
               <div class="grid grid-cols-3 gap-2">
-                <div>
-                  <label class="block text-[10px] text-slate-500 text-center">Bơm 1.1</label>
-                  <div class="flex items-center space-x-1 mt-0.5">
-                    <button onclick="adjustValue('p-cn-11', -0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">-</button>
-                    <input type="number" step="0.1" id="p-cn-11" value="4.5" class="w-full bg-white border rounded py-1 text-center font-bold text-xs">
-                    <button onclick="adjustValue('p-cn-11', 0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">+</button>
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[10px] font-bold text-slate-600">Bơm 1.1</label>
+                    <button type="button" id="cn-run-11" onclick="toggleCnPump('11')" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Chạy</button>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('p-cn-11', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="p-cn-11" value="4.5" placeholder="—" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('p-cn-11', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
                   </div>
                 </div>
-                <div>
-                  <label class="block text-[10px] text-slate-500 text-center">Bơm 1.2</label>
-                  <div class="flex items-center space-x-1 mt-0.5">
-                    <button onclick="adjustValue('p-cn-12', -0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">-</button>
-                    <input type="number" step="0.1" id="p-cn-12" value="4.5" class="w-full bg-white border rounded py-1 text-center font-bold text-xs">
-                    <button onclick="adjustValue('p-cn-12', 0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">+</button>
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[10px] font-bold text-slate-600">Bơm 1.2</label>
+                    <button type="button" id="cn-run-12" onclick="toggleCnPump('12')" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-500">Nghỉ</button>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('p-cn-12', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="p-cn-12" value="" placeholder="—" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('p-cn-12', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
                   </div>
                 </div>
-                <div>
-                  <label class="block text-[10px] text-slate-500 text-center">Bơm 1.3</label>
-                  <div class="flex items-center space-x-1 mt-0.5">
-                    <button onclick="adjustValue('p-cn-13', -0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">-</button>
-                    <input type="number" step="0.1" id="p-cn-13" value="4.5" class="w-full bg-white border rounded py-1 text-center font-bold text-xs">
-                    <button onclick="adjustValue('p-cn-13', 0.1, 1)" class="w-6 h-6 rounded bg-white border text-xs font-bold">+</button>
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[10px] font-bold text-slate-600">Bơm 1.3</label>
+                    <button type="button" id="cn-run-13" onclick="toggleCnPump('13')" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-500">Nghỉ</button>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('p-cn-13', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="p-cn-13" value="" placeholder="—" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('p-cn-13', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
                   </div>
                 </div>
               </div>
             </div>
 
             <!-- Van giảm áp tầng 6 -->
-            <div class="p-2.5 rounded-xl bg-slate-50 space-y-1">
+            <div class="p-2.5 rounded-xl bg-slate-50 space-y-1.5">
               <span class="font-bold text-slate-700 block">Van giảm áp trục kỹ thuật Tầng 6 (T12 xuống T6):</span>
               <div class="grid grid-cols-2 gap-2">
-                <input type="text" id="vg-ap-tren" value="Áp suất trên: 5.2 bar" class="bg-white border rounded-lg px-2 py-1 text-xs text-center font-medium">
-                <input type="text" id="vg-ap-duoi" value="Áp suất dưới: 2.8 bar" class="bg-white border rounded-lg px-2 py-1 text-xs text-center font-medium">
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <label class="block text-[10px] text-slate-500 font-medium">Áp suất trên (bar)</label>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('vg-ap-tren', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="vg-ap-tren" value="5.2" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('vg-ap-tren', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
+                  </div>
+                  <div class="flex space-x-1">
+                    <button onclick="setNumericValue('vg-ap-tren', 5.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">5.0</button>
+                    <button onclick="setNumericValue('vg-ap-tren', 5.2)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">5.2</button>
+                    <button onclick="setNumericValue('vg-ap-tren', 5.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">5.5</button>
+                  </div>
+                </div>
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <label class="block text-[10px] text-slate-500 font-medium">Áp suất dưới (bar)</label>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('vg-ap-duoi', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="vg-ap-duoi" value="2.8" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('vg-ap-duoi', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
+                  </div>
+                  <div class="flex space-x-1">
+                    <button onclick="setNumericValue('vg-ap-duoi', 2.5)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">2.5</button>
+                    <button onclick="setNumericValue('vg-ap-duoi', 2.8)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-blue-600 font-bold border-blue-300">2.8</button>
+                    <button onclick="setNumericValue('vg-ap-duoi', 3.0)" class="chip-btn flex-1 py-0.5 rounded-md bg-slate-50 border text-[10px] text-slate-600 font-semibold">3.0</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -442,34 +480,54 @@
             <span class="text-[10px] bg-teal-50 text-teal-700 px-2 py-0.5 rounded-full font-bold">Chạy Thận & Tiệt Trùng</span>
           </div>
 
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
-            <div class="flex justify-between items-center text-xs">
-              <span class="font-bold text-slate-700">TDS Nước Sau RO (Bắt buộc &lt; 30 ppm)</span>
-              <span id="tds-sau-badge" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">An toàn</span>
+          <div class="grid grid-cols-2 gap-2">
+            <div class="p-2 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-slate-700 text-xs">Zone 1</span>
+                <span id="tds-sau-badge-z1" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Đạt</span>
+              </div>
+              <label class="block text-[10px] text-slate-500 font-medium">TDS sau RO (&lt; 30 ppm)</label>
+              <div class="flex items-center space-x-1">
+                <button onclick="adjustValue('val-tds-sau-z1', -1, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">-</button>
+                <input type="number" id="val-tds-sau-z1" value="12" oninput="debouncedValidateRO()" class="w-full bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+                <button onclick="adjustValue('val-tds-sau-z1', 1, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">+</button>
+              </div>
+              <div class="flex space-x-1">
+                <button onclick="setNumericValue('val-tds-sau-z1', 8)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-slate-600 font-semibold">8</button>
+                <button onclick="setNumericValue('val-tds-sau-z1', 12)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-teal-600 font-bold border-teal-300">12</button>
+                <button onclick="setNumericValue('val-tds-sau-z1', 18)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-slate-600 font-semibold">18</button>
+                <button onclick="setNumericValue('val-tds-sau-z1', 28)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-amber-600 font-semibold">28</button>
+              </div>
+              <label class="block text-[10px] text-slate-500 font-medium">TDS trước RO (&lt; 150 ppm)</label>
+              <div class="flex items-center space-x-1">
+                <button onclick="adjustValue('val-tds-truoc-z1', -5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">-</button>
+                <input type="number" id="val-tds-truoc-z1" value="110" oninput="debouncedValidateRO()" class="w-full bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+                <button onclick="adjustValue('val-tds-truoc-z1', 5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">+</button>
+              </div>
             </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="adjustValue('val-tds-sau', -1, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700">-</button>
-              <input type="number" id="val-tds-sau" value="12" oninput="debouncedValidateRO()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1.5 text-center text-sm font-bold text-slate-800">
-              <button onclick="adjustValue('val-tds-sau', 1, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700">+</button>
-            </div>
-            <div class="flex space-x-1.5 text-[11px]">
-              <span class="text-slate-400 self-center text-[10px]">Gợi ý:</span>
-              <button onclick="setNumericValue('val-tds-sau', 8)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">8 ppm</button>
-              <button onclick="setNumericValue('val-tds-sau', 12)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-teal-600 font-bold border-teal-300">12 ppm</button>
-              <button onclick="setNumericValue('val-tds-sau', 18)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-slate-600 font-semibold">18 ppm</button>
-              <button onclick="setNumericValue('val-tds-sau', 28)" class="chip-btn px-2 py-0.5 rounded-md bg-white border text-amber-600 font-semibold">28 ppm</button>
-            </div>
-          </div>
-
-          <div class="p-2.5 rounded-xl bg-slate-50 border border-slate-100 space-y-1.5">
-            <div class="flex justify-between items-center text-xs">
-              <span class="font-bold text-slate-700">TDS Nước Trước RO (Chuẩn &lt; 150 ppm)</span>
-              <span class="text-[10px] text-slate-400 font-medium">&lt; 150 ppm</span>
-            </div>
-            <div class="flex items-center space-x-2">
-              <button onclick="adjustValue('val-tds-truoc', -5, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700">-</button>
-              <input type="number" id="val-tds-truoc" value="110" oninput="debouncedValidateRO()" class="flex-1 bg-white border border-slate-200 rounded-lg py-1.5 text-center text-sm font-bold text-slate-800">
-              <button onclick="adjustValue('val-tds-truoc', 5, 0)" class="w-8 h-8 rounded-lg bg-white border shadow-sm font-bold text-slate-700">+</button>
+            <div class="p-2 rounded-xl bg-slate-50 border border-slate-100 space-y-1">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-slate-700 text-xs">Zone 3</span>
+                <span id="tds-sau-badge-z3" class="text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Đạt</span>
+              </div>
+              <label class="block text-[10px] text-slate-500 font-medium">TDS sau RO (&lt; 30 ppm)</label>
+              <div class="flex items-center space-x-1">
+                <button onclick="adjustValue('val-tds-sau-z3', -1, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">-</button>
+                <input type="number" id="val-tds-sau-z3" value="12" oninput="debouncedValidateRO()" class="w-full bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+                <button onclick="adjustValue('val-tds-sau-z3', 1, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">+</button>
+              </div>
+              <div class="flex space-x-1">
+                <button onclick="setNumericValue('val-tds-sau-z3', 8)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-slate-600 font-semibold">8</button>
+                <button onclick="setNumericValue('val-tds-sau-z3', 12)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-teal-600 font-bold border-teal-300">12</button>
+                <button onclick="setNumericValue('val-tds-sau-z3', 18)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-slate-600 font-semibold">18</button>
+                <button onclick="setNumericValue('val-tds-sau-z3', 28)" class="chip-btn flex-1 py-0.5 rounded-md bg-white border text-[10px] text-amber-600 font-semibold">28</button>
+              </div>
+              <label class="block text-[10px] text-slate-500 font-medium">TDS trước RO (&lt; 150 ppm)</label>
+              <div class="flex items-center space-x-1">
+                <button onclick="adjustValue('val-tds-truoc-z3', -5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">-</button>
+                <input type="number" id="val-tds-truoc-z3" value="110" oninput="debouncedValidateRO()" class="w-full bg-white border border-slate-200 rounded-lg py-1 text-center text-xs font-bold text-slate-800 min-w-0">
+                <button onclick="adjustValue('val-tds-truoc-z3', 5, 0)" class="w-7 h-7 rounded-lg bg-white border shadow-sm font-bold text-slate-700 shrink-0">+</button>
+              </div>
             </div>
           </div>
 
@@ -6745,15 +6803,13 @@ ${isChief() ? `
         notes = document.getElementById('xlnt-notes')?.value || 'Hoạt động bình thường';
       } else if (activeSub === 'capnuoc') {
         systemName = 'Cấp Nước Sinh Hoạt';
-        const p11 = document.getElementById('p-cn-11')?.value || '4.5';
-        metrics = `Áp lực bơm sinh hoạt: ${p11} bar | Bể ngầm 800m³`;
+        const pumpTxt = ['11', '12', '13'].map(cnPumpText).join(' | ');
+        metrics = `Áp lực: ${pumpTxt} | Bể ngầm 800m³`;
         rating = document.getElementById('cn-overall-rating')?.value || 'BT';
         notes = document.getElementById('cn-notes')?.value || 'Áp lực bơm ổn định';
       } else if (activeSub === 'ro') {
         systemName = 'Hệ Thống Lọc RO';
-        const tdsSau = document.getElementById('val-tds-sau')?.value || '12';
-        const tdsTruoc = document.getElementById('val-tds-truoc')?.value || '110';
-        metrics = `TDS sau RO: ${tdsSau} ppm | TDS trước: ${tdsTruoc} ppm`;
+        metrics = `TDS sau RO: ${roTdsText()}`;
         rating = document.getElementById('ro-overall-rating')?.value || 'BT';
         notes = document.getElementById('ro-notes')?.value || 'Nước đạt chuẩn chạy thận';
       } else if (activeSub === 'nuocthai') {
@@ -6786,6 +6842,7 @@ ${isChief() ? `
 
       inspectionHistory.unshift(newLog);
       saveStorage('bv_inspection_history', inspectionHistory);
+      captureChecklistState();
       renderInspectionHistory();
       showToast(`Đã lưu nhật ký kiểm tra [${systemName}] thành công!`);
     }
@@ -7221,6 +7278,172 @@ ${isChief() ? `
       if (id.includes('tds')) validateRO();
     }
 
+    // --- Trạng thái chạy/nghỉ từng bơm cấp nước GĐ1 (mặc định chỉ bơm 1.1 chạy) ---
+    const cnPumpRun = { '11': true, '12': false, '13': false };
+    function toggleCnPump(id) {
+      cnPumpRun[id] = !cnPumpRun[id];
+      applyCnPumpState(id);
+    }
+    function applyCnPumpState(id) {
+      const running = !!cnPumpRun[id];
+      const btn = document.getElementById('cn-run-' + id);
+      const inp = document.getElementById('p-cn-' + id);
+      if (btn) {
+        btn.textContent = running ? 'Chạy' : 'Nghỉ';
+        btn.className = 'text-[9px] font-bold px-1.5 py-0.5 rounded ' + (running ? 'bg-emerald-100 text-emerald-700' : 'bg-slate-200 text-slate-500');
+      }
+      if (inp) {
+        inp.disabled = !running;
+        inp.classList.toggle('opacity-40', !running);
+        if (!running) inp.value = '';
+        else if (!inp.value) inp.value = '4.5';
+      }
+    }
+    function initCnPumps() { ['11', '12', '13'].forEach(applyCnPumpState); }
+    function cnPumpText(id) {
+      const label = '1.' + id.slice(-1);
+      if (!cnPumpRun[id]) return 'Bơm ' + label + ': Không chọn';
+      const v = document.getElementById('p-cn-' + id)?.value;
+      return 'Bơm ' + label + ': ' + (v ? v + ' bar' : 'Không chọn');
+    }
+
+    // --- Trạm RO 2 zone (Zone 1 / Zone 3) ---
+    function roZoneVal(kind, z) {
+      const el = document.getElementById('val-tds-' + kind + '-' + z);
+      return el ? el.value : '';
+    }
+    function roZoneNum(kind, z) {
+      const v = roZoneVal(kind, z);
+      return (v !== '' && v != null) ? parseFloat(v) : NaN;
+    }
+    function roTdsText() {
+      return 'Zone 1: ' + roZoneVal('sau', 'z1') + ' ppm (trước RO: ' + roZoneVal('truoc', 'z1') + ' ppm)' +
+        ' | Zone 3: ' + roZoneVal('sau', 'z3') + ' ppm (trước RO: ' + roZoneVal('truoc', 'z3') + ' ppm)';
+    }
+    function roTdsWorst() {
+      const cands = [['Zone 1', roZoneNum('sau', 'z1')], ['Zone 3', roZoneNum('sau', 'z3')]]
+        .filter(function (c) { return !isNaN(c[1]); });
+      if (!cands.length) return null;
+      let w = { zone: cands[0][0], sau: cands[0][1] };
+      cands.forEach(function (c) { if (c[1] > w.sau) w = { zone: c[0], sau: c[1] }; });
+      return w;
+    }
+
+    // --- Danh sách lựa chọn Máy thổi khí / Chu kỳ lọc rửa (máy trưởng quản lý, đồng bộ cả tổ) ---
+    const BLOWER_DEFAULTS = ['Máy 1 + Máy 2', 'Máy 2 + Máy 3', 'Máy 3 + Máy 4', 'Máy 1 + Máy 4'];
+    const CYCLE_DEFAULTS = ['Lọc 1 - Rửa 1 (Bình thường)', 'Lọc 2 - Rửa 2', 'Đang CIP hóa chất'];
+    function getOptionList(kind) {
+      const cfg = loadStorage('bv_app_config', {}) || {};
+      const key = kind === 'blower' ? 'blowerOptions' : 'cycleOptions';
+      const def = kind === 'blower' ? BLOWER_DEFAULTS : CYCLE_DEFAULTS;
+      return (cfg[key] && cfg[key].length) ? cfg[key].slice() : def.slice();
+    }
+    function renderOptionSelect(kind) {
+      const sel = document.getElementById(kind === 'blower' ? 'xlnt-blower' : 'xlnt-mbr-cycle');
+      if (!sel) return;
+      const cur = sel.value;
+      const list = getOptionList(kind);
+      sel.innerHTML = '';
+      list.forEach(function (t) {
+        const o = document.createElement('option');
+        o.textContent = t;
+        sel.appendChild(o);
+      });
+      if (list.indexOf(cur) >= 0) sel.value = cur;
+    }
+    function renderBlowerSelect() { renderOptionSelect('blower'); }
+    function renderCycleSelect() { renderOptionSelect('cycle'); }
+    function manageOptionList(kind) {
+      if (typeof isChief === 'function' && !isChief()) { alert('Chỉ máy trưởng mới sửa được danh sách này.'); return; }
+      const name = kind === 'blower' ? 'Máy thổi khí' : 'Chu kỳ lọc / rửa';
+      const key = kind === 'blower' ? 'blowerOptions' : 'cycleOptions';
+      let list = getOptionList(kind);
+      for (;;) {
+        const lines = list.map(function (t, i) { return (i + 1) + '. ' + t; }).join('\n');
+        const inp = prompt(name + ' — danh sách hiện tại:\n' + lines +
+          '\n\nNhập lệnh (bỏ trống / Hủy để xong):\n• them <tên> → thêm mục mới\n• sua <số> <tên mới> → sửa mục\n• xoa <số> → xóa mục');
+        if (inp == null || !inp.trim()) break;
+        const m = inp.trim().match(/^(them|sua|xoa)\s*(.*)$/i);
+        if (!m) { alert('Lệnh không hợp lệ. Dùng: them / sua / xoa.'); continue; }
+        const cmd = m[1].toLowerCase(), rest = m[2].trim();
+        if (cmd === 'them') {
+          if (!rest) { alert('Nhập tên mục cần thêm. Vd: them Máy 1 + Máy 3'); continue; }
+          list.push(rest);
+        } else if (cmd === 'xoa') {
+          const idx = parseInt(rest, 10) - 1;
+          if (isNaN(idx) || idx < 0 || idx >= list.length) { alert('Số thứ tự không đúng.'); continue; }
+          if (list.length <= 1) { alert('Danh sách phải còn ít nhất 1 mục.'); continue; }
+          if (!confirm('Xóa "' + list[idx] + '"?')) continue;
+          list.splice(idx, 1);
+        } else {
+          const sm = rest.match(/^(\d+)\s+(.+)$/);
+          if (!sm) { alert('Cú pháp: sua <số> <tên mới>. Vd: sua 2 Máy 1 + Máy 3'); continue; }
+          const idx = parseInt(sm[1], 10) - 1;
+          if (idx < 0 || idx >= list.length) { alert('Số thứ tự không đúng.'); continue; }
+          list[idx] = sm[2].trim();
+        }
+      }
+      const cfg = loadStorage('bv_app_config', {}) || {};
+      cfg[key] = list;
+      saveStorage('bv_app_config', cfg);
+      renderOptionSelect(kind);
+    }
+
+    // --- Giữ lại toàn bộ thông tin lần nhập cuối (mở lại vẫn còn, đồng bộ cả tổ) ---
+    function checklistToggleGroups() {
+      const groups = [];
+      document.querySelectorAll('#tab-checklist [onclick^="setToggle("]').forEach(function (b) {
+        const p = b.parentElement;
+        let g = null;
+        for (let i = 0; i < groups.length; i++) if (groups[i].el === p) { g = groups[i]; break; }
+        if (!g) { g = { el: p, btns: [] }; groups.push(g); }
+        g.btns.push(b);
+      });
+      return groups;
+    }
+    function captureChecklistState() {
+      const fields = {};
+      document.querySelectorAll('#tab-checklist input[id], #tab-checklist select[id], #tab-checklist textarea[id]').forEach(function (el) {
+        if (el.type === 'checkbox') fields[el.id] = el.checked ? '1' : '0';
+        else fields[el.id] = el.value;
+      });
+      const toggles = checklistToggleGroups().map(function (g) {
+        let active = 0;
+        g.btns.forEach(function (b, i) { if (/\btext-white\b/.test(b.className)) active = i; });
+        return active;
+      });
+      saveStorage('bv_last_checklist', { fields: fields, toggles: toggles, cnPumpRun: Object.assign({}, cnPumpRun), savedAt: Date.now() });
+    }
+    function restoreChecklistState() {
+      const st = loadStorage('bv_last_checklist', null);
+      if (!st || !st.fields) return;
+      const root = document.getElementById('tab-checklist');
+      Object.keys(st.fields).forEach(function (id) {
+        const el = document.getElementById(id);
+        if (!el || (root && !root.contains(el))) return;
+        if (el.type === 'checkbox') el.checked = st.fields[id] === '1';
+        else if (el.tagName === 'SELECT') {
+          const v = st.fields[id];
+          const ok = Array.prototype.some.call(el.options, function (o) { return o.value === v || o.text === v; });
+          if (ok) el.value = v;
+        } else el.value = st.fields[id];
+      });
+      if (st.cnPumpRun && typeof cnPumpRun !== 'undefined') {
+        Object.keys(st.cnPumpRun).forEach(function (k) { cnPumpRun[k] = !!st.cnPumpRun[k]; });
+        ['11', '12', '13'].forEach(applyCnPumpState);
+      }
+      if (st.toggles) {
+        checklistToggleGroups().forEach(function (g, gi) {
+          const ai = st.toggles[gi];
+          if (ai == null || ai < 0 || ai >= g.btns.length) return;
+          const m = (g.btns[ai].getAttribute('onclick') || '').match(/setToggle\(this,\s*'([^']+)'\)/);
+          if (m) setToggle(g.btns[ai], m[1]);
+        });
+      }
+      try { if (typeof validateROZones === 'function') validateROZones(); } catch (e) {}
+      try { if (typeof validateMetrics === 'function') validateMetrics(); } catch (e) {}
+    }
+
     function setToggle(btn, type) {
       const parent = btn.parentElement;
       parent.querySelectorAll('button').forEach(b => {
@@ -7280,30 +7503,46 @@ ${isChief() ? `
       }
     }
 
-    function validateRO() {
-      const tdsSau = parseFloat(document.getElementById('val-tds-sau')?.value);
+    function validateROZones() {
       const alertBox = document.getElementById('ro-alert');
-      const badge = document.getElementById('tds-sau-badge');
-      if (tdsSau >= 30) {
-        if (badge) {
-          badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700';
-          badge.innerText = 'VƯỢT CHUẨN';
-        }
-        if (alertBox) {
-          alertBox.className = 'text-xs font-semibold p-2.5 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 block';
-          alertBox.innerHTML = `<i class="fa-solid fa-radiation mr-1"></i> BÁO ĐỘNG: TDS sau RO = ${tdsSau} ppm (≥ 30 ppm)! Nước không đạt chuẩn chạy thận nhân tạo. Cần kiểm tra van rửa/màng lọc khẩn cấp!`;
-        }
-      } else if (tdsSau) {
-        if (badge) {
+      let worst = null;
+      const truocWarn = [];
+      [['z1', 'Zone 1'], ['z3', 'Zone 3']].forEach(([z, label]) => {
+        const rawSau = document.getElementById('val-tds-sau-' + z)?.value;
+        const rawTruoc = document.getElementById('val-tds-truoc-' + z)?.value;
+        const sau = rawSau !== '' && rawSau != null ? parseFloat(rawSau) : NaN;
+        const truoc = rawTruoc !== '' && rawTruoc != null ? parseFloat(rawTruoc) : NaN;
+        const badge = document.getElementById('tds-sau-badge-' + z);
+        if (!isNaN(sau) && sau >= 30) {
+          if (badge) {
+            badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700';
+            badge.innerText = 'VƯỢT CHUẨN';
+          }
+          if (!worst || sau > worst.sau) worst = { zone: label, sau };
+        } else if (!isNaN(sau) && badge) {
           badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700';
-          badge.innerText = 'Đạt an toàn';
+          badge.innerText = 'Đạt';
         }
-        if (alertBox) {
+        if (!isNaN(truoc) && truoc >= 150) truocWarn.push(label + ' (' + truoc + ' ppm)');
+      });
+      if (!alertBox) return;
+      if (worst) {
+        alertBox.className = 'text-xs font-semibold p-2.5 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 block';
+        alertBox.innerHTML = `<i class="fa-solid fa-radiation mr-1"></i> BÁO ĐỘNG: TDS sau RO ${worst.zone} = ${worst.sau} ppm (≥ 30 ppm)! Nước không đạt chuẩn chạy thận nhân tạo. Cần kiểm tra van rửa/màng lọc khẩn cấp!`;
+      } else {
+        const anySau = ['z1', 'z3'].some(z => {
+          const v = document.getElementById('val-tds-sau-' + z)?.value;
+          return v !== '' && v != null && !isNaN(parseFloat(v));
+        });
+        if (anySau) {
+          const warn = truocWarn.length
+            ? `<br><span class="text-amber-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Lưu ý: TDS trước RO đang cao (chuẩn &lt; 150 ppm): ${truocWarn.join(', ')}.</span>`
+            : '';
           alertBox.className = 'text-xs font-semibold p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 block';
-          alertBox.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> TDS sau RO (${tdsSau} ppm) đạt yêu cầu phục vụ lọc máu và tiệt trùng (&lt;30).`;
+          alertBox.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> TDS sau RO 2 zone đạt yêu cầu phục vụ lọc máu và tiệt trùng (&lt; 30 ppm).${warn}`;
+        } else {
+          alertBox.classList.add('hidden');
         }
-      } else if (alertBox) {
-        alertBox.classList.add('hidden');
       }
     }
 
@@ -7380,7 +7619,9 @@ TỔ VẬN HÀNH - NƯỚC
       }
 
       if (document.getElementById('chk-sec-3')?.checked) {
-        const tds = document.getElementById('val-tds-sau')?.value || '12';
+        const tdsZ1 = roZoneVal('sau', 'z1'), tdsZ3 = roZoneVal('sau', 'z3');
+        const worstRO = roTdsWorst();
+        const roStatus = worstRO && worstRO.sau >= 30 ? `CẢNH BÁO ${worstRO.zone} VƯỢT NGƯỠNG` : 'Đạt chuẩn chạy thận < 30 ppm';
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:
 ` +
           `- Bể ngầm 800 m³: Mức nước 75%, van phao cơ tự động mở tốt.
@@ -7389,7 +7630,7 @@ TỔ VẬN HÀNH - NƯỚC
 ` +
           `- Áp lực bơm sinh hoạt: Đạt 4.5 bar ổn định; van giảm áp tầng 6 đạt áp trên 5.2 / dưới 2.8 bar.
 ` +
-          `- Trạm RO: TDS sau RO = ${tds} ppm (Đạt chuẩn chạy thận < 30 ppm).
+          `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).
 
 `;
       }
@@ -7462,7 +7703,8 @@ TỔ VẬN HÀNH - NƯỚC
       const amoni = document.getElementById('val-amoni')?.value || '8.5';
       const flowIn = document.getElementById('flow-in')?.value || '18540';
       const flowOut = document.getElementById('flow-out')?.value || '18320';
-      const tds = document.getElementById('val-tds-sau')?.value || '12';
+      const tdsZ1 = roZoneVal('sau', 'z1') || '12';
+      const tdsZ3 = roZoneVal('sau', 'z3') || '12';
 
       const dialog = document.getElementById('dialog-preview-report');
       if (dialog) {
@@ -7557,7 +7799,7 @@ TỔ VẬN HÀNH - NƯỚC
               <tr><td class="border border-slate-300 p-1 text-center font-bold">3</td><td class="border border-slate-300 p-1 font-bold">Trạm XLNT - BOD5</td><td class="border border-slate-300 p-1 text-center font-bold">${bod} mg/l</td><td class="border border-slate-300 p-1 text-center">118 - 189</td><td class="border border-slate-300 p-1 text-center text-emerald-700">Bình thường</td><td class="border border-slate-300 p-1 italic">Bùn vi sinh phát triển tốt</td></tr>
               <tr class="bg-slate-50"><td class="border border-slate-300 p-1 text-center font-bold">4</td><td class="border border-slate-300 p-1 font-bold">Trạm XLNT - Amoni</td><td class="border border-slate-300 p-1 text-center font-bold">${amoni} mg/l</td><td class="border border-slate-300 p-1 text-center">4.0 - 13.0</td><td class="border border-slate-300 p-1 text-center font-bold text-emerald-700">Đạt vi sinh</td><td class="border border-slate-300 p-1 italic">Sục khí luân phiên máy 1 & 2</td></tr>
               <tr><td class="border border-slate-300 p-1 text-center font-bold">5</td><td class="border border-slate-300 p-1 font-bold">Lưu lượng nước thải</td><td class="border border-slate-300 p-1 text-center font-bold">~220 m³</td><td class="border border-slate-300 p-1 text-center">750 m³/ngày</td><td class="border border-slate-300 p-1 text-center text-emerald-700">Bình thường</td><td class="border border-slate-300 p-1 italic">Vào: ${flowIn} m³ | Ra: ${flowOut} m³</td></tr>
-              <tr class="bg-slate-50"><td class="border border-slate-300 p-1 text-center font-bold">6</td><td class="border border-slate-300 p-1 font-bold">Trạm RO - Sau lọc</td><td class="border border-slate-300 p-1 text-center font-black text-emerald-700">${tds} ppm</td><td class="border border-slate-300 p-1 text-center">&lt; 30 ppm</td><td class="border border-slate-300 p-1 text-center font-bold text-emerald-700">AN TOÀN Y TẾ</td><td class="border border-slate-300 p-1 italic">Cấp chạy thận Zone 1, 3</td></tr>
+              <tr class="bg-slate-50"><td class="border border-slate-300 p-1 text-center font-bold">6</td><td class="border border-slate-300 p-1 font-bold">Trạm RO - Sau lọc (Zone 1 / Zone 3)</td><td class="border border-slate-300 p-1 text-center font-black text-emerald-700">${tdsBoth} ppm</td><td class="border border-slate-300 p-1 text-center">&lt; 30 ppm</td><td class="border border-slate-300 p-1 text-center font-bold text-emerald-700">AN TOÀN Y TẾ</td><td class="border border-slate-300 p-1 italic">Cấp chạy thận Zone 1, 3</td></tr>
               <tr><td class="border border-slate-300 p-1 text-center font-bold">7</td><td class="border border-slate-300 p-1 font-bold">Bơm cấp sinh hoạt GĐ1</td><td class="border border-slate-300 p-1 text-center">4.5 bar</td><td class="border border-slate-300 p-1 text-center">4.2 - 4.8 bar</td><td class="border border-slate-300 p-1 text-center text-emerald-700">Ổn định</td><td class="border border-slate-300 p-1 italic">Bể ngầm 800m³ đạt 75%</td></tr>
               <tr class="bg-slate-50"><td class="border border-slate-300 p-1 text-center font-bold">8</td><td class="border border-slate-300 p-1 font-bold">Bơm thoát nước thải TNT</td><td class="border border-slate-300 p-1 text-center">16 cụm</td><td class="border border-slate-300 p-1 text-center">100% Auto</td><td class="border border-slate-300 p-1 text-center text-amber-600 font-bold">1 cảnh báo</td><td class="border border-slate-300 p-1 italic">BNT4 nhà xe lỗi phao</td></tr>
             </tbody>
@@ -7827,7 +8069,9 @@ TỔ VẬN HÀNH - NƯỚC
       const amoni = document.getElementById('val-amoni')?.value || '8.5';
       const flowIn = document.getElementById('flow-in')?.value || '18540';
       const flowOut = document.getElementById('flow-out')?.value || '18320';
-      const tds = document.getElementById('val-tds-sau')?.value || '12';
+      const tdsZ1 = roZoneVal('sau', 'z1') || '12';
+      const tdsZ3 = roZoneVal('sau', 'z3') || '12';
+      const tdsBoth = `${tdsZ1} / ${tdsZ3}`;
 
       function esc(s) {
         return String(s || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
@@ -7843,7 +8087,7 @@ TỔ VẬN HÀNH - NƯỚC
         [3, 'Trạm XLNT - BOD5', `${bod} mg/l`, '118 - 189 mg/l', 'Bình thường', 'Bùn vi sinh hiếu khí phát triển tốt', inspector],
         [4, 'Trạm XLNT - Amoni', `${amoni} mg/l`, '4.0 - 13.0 mg/l', 'Đạt chuẩn', 'Sục khí luân phiên máy 1 & 2', inspector],
         [5, 'Lưu lượng nước thải', '~220 m³', '750 m³/ngày', 'Bình thường', `Đồng hồ vào: ${flowIn} | Ra: ${flowOut}`, inspector],
-        [6, 'Trạm RO - Sau lọc', `${tds} ppm`, '< 30 ppm', 'AN TOÀN Y TẾ', 'Cấp nước lọc máu Zone 1 & 3', inspector],
+        [6, 'Trạm RO - Sau lọc (Zone 1 / Zone 3)', `${tdsBoth} ppm`, '< 30 ppm', 'AN TOÀN Y TẾ', 'Cấp nước lọc máu Zone 1 & 3', inspector],
         [7, 'Bơm cấp sinh hoạt GĐ1', '4.5 bar', '4.2 - 4.8 bar', 'Ổn định', 'Bể ngầm 800m³ đạt 75%', inspector],
         [8, 'Bơm thoát nước thải TNT', '16 cụm', '100% Auto', '1 cảnh báo', 'BNT4 nhà xe lỗi phao', inspector]
       ];
@@ -8284,7 +8528,9 @@ TỔ VẬN HÀNH - NƯỚC
       const amoni = document.getElementById('val-amoni')?.value || '8.5';
       const flowIn = document.getElementById('flow-in')?.value || '18540';
       const flowOut = document.getElementById('flow-out')?.value || '18320';
-      const tds = document.getElementById('val-tds-sau')?.value || '12';
+      const tdsZ1 = roZoneVal('sau', 'z1') || '12';
+      const tdsZ3 = roZoneVal('sau', 'z3') || '12';
+      const tdsBoth = `${tdsZ1} / ${tdsZ3}`;
 
       const rows = [
         ['BỆNH VIỆN ĐA KHOA VĨNH PHÚC', '', '', 'CỘNG HÒA XÃ HỘI CHỦ NGHĨA VIỆT NAM'],
@@ -8300,7 +8546,7 @@ TỔ VẬN HÀNH - NƯỚC
         [3, 'Trạm XLNT - Nhu cầu BOD5', `${bod} mg/l`, '118 - 189 mg/l', 'Bình thường', 'Bùn vi sinh hiếu khí phát triển tốt', inspector],
         [4, 'Trạm XLNT - Nồng độ Amoni', `${amoni} mg/l`, '4.0 - 13.0 mg/l', 'Đạt chuẩn vi sinh', 'Chế độ sục khí luân phiên máy 1 & 2', inspector],
         [5, 'Lưu lượng nước thải xử lý', '~220 m³/ca', 'Công suất 750 m³/ngày', 'Bình thường', `Đồng hồ vào: ${flowIn} m³ | Ra: ${flowOut} m³`, inspector],
-        [6, 'Trạm RO - Nước sau lọc', `${tds} ppm`, '< 30 ppm (Chạy thận)', 'AN TOÀN Y TẾ', 'Đảm bảo cấp nước lọc máu Zone 1 & 3', inspector],
+        [6, 'Trạm RO - Nước sau lọc (Zone 1 / Zone 3)', `${tdsBoth} ppm`, '< 30 ppm (Chạy thận)', 'AN TOÀN Y TẾ', 'Đảm bảo cấp nước lọc máu Zone 1 & 3', inspector],
         [7, 'Bơm cấp nước sinh hoạt GĐ1', 'Áp lực 4.5 bar', '4.2 - 4.8 bar', 'Ổn định', 'Bể ngầm 800m³ đạt 75%, 4 bể mái T12 đầy', inspector],
         [8, 'Cụm bơm thoát nước thải TNT', '16 cụm bơm chìm', '100% Auto luân phiên', '1 bơm cảnh báo', 'BNT4 nhà xe lỗi phao, đang chạy bơm số 2', inspector],
         [''],
@@ -9446,38 +9692,7 @@ TỔ VẬN HÀNH - NƯỚC
     }
 
     function validateRO() {
-      const rawTdsSau = document.getElementById('val-tds-sau')?.value;
-      const rawTdsTruoc = document.getElementById('val-tds-truoc')?.value;
-      const tdsSau = rawTdsSau !== '' ? parseFloat(rawTdsSau) : NaN;
-      const tdsTruoc = rawTdsTruoc !== '' ? parseFloat(rawTdsTruoc) : NaN;
-
-      const alertBox = document.getElementById('ro-alert');
-      const badge = document.getElementById('tds-sau-badge');
-
-      if (!isNaN(tdsSau) && tdsSau >= 30) {
-        if (badge) {
-          badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-rose-100 text-rose-700';
-          badge.innerText = 'VƯỢT CHUẨN';
-        }
-        if (alertBox) {
-          alertBox.className = 'text-xs font-semibold p-2.5 rounded-xl bg-rose-50 text-rose-600 border border-rose-200 block';
-          alertBox.innerHTML = `<i class="fa-solid fa-radiation mr-1"></i> BÁO ĐỘNG: TDS sau RO = ${tdsSau} ppm (≥ 30 ppm)! Nước không đạt chuẩn chạy thận nhân tạo. Cần kiểm tra van rửa/màng lọc khẩn cấp!`;
-        }
-      } else if (!isNaN(tdsSau)) {
-        if (badge) {
-          badge.className = 'text-[10px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700';
-          badge.innerText = 'Đạt an toàn';
-        }
-        if (alertBox) {
-          let extraWarn = (!isNaN(tdsTruoc) && tdsTruoc >= 150)
-            ? `<br><span class="text-amber-600"><i class="fa-solid fa-triangle-exclamation mr-1"></i>Lưu ý: TDS trước RO (${tdsTruoc} ppm) đang cao (chuẩn &lt; 150 ppm).</span>`
-            : '';
-          alertBox.className = 'text-xs font-semibold p-2.5 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 block';
-          alertBox.innerHTML = `<i class="fa-solid fa-circle-check mr-1"></i> TDS sau RO (${tdsSau} ppm) đạt yêu cầu phục vụ lọc máu và tiệt trùng (&lt; 30 ppm).${extraWarn}`;
-        }
-      } else if (alertBox) {
-        alertBox.classList.add('hidden');
-      }
+      validateROZones();
     }
 
     function debounce(func, wait = 100) {
@@ -9557,14 +9772,16 @@ TỔ VẬN HÀNH - NƯỚC
       }
 
       if (document.getElementById('chk-sec-3')?.checked) {
-        const tds = document.getElementById('val-tds-sau')?.value || '12';
-        const p11 = document.getElementById('p-cn-11')?.value || '4.5';
+        const tdsZ1 = roZoneVal('sau', 'z1'), tdsZ3 = roZoneVal('sau', 'z3');
+        const worstRO = roTdsWorst();
+        const roStatus = worstRO && worstRO.sau >= 30 ? `CẢNH BÁO ${worstRO.zone} VƯỢT NGƯỠNG` : 'Đạt chuẩn chạy thận < 30 ppm';
+        const pumpTxt = ['11', '12', '13'].map(cnPumpText).join('; ');
         const beNgam = document.getElementById('cn-be-ngam')?.value || 'Trung bình (50-80%)';
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:\n` +
           `- Bể ngầm 800 m³: Mức nước ${beNgam}, van phao cơ tự động mở tốt.\n` +
           `- Cụm 4 bể composite mái T12: Đầy nước, phao điện ngắt tốt.\n` +
-          `- Áp lực bơm sinh hoạt: Đạt ${p11} bar ổn định; van giảm áp tầng 6 (${document.getElementById('vg-ap-tren')?.value || '5.2 bar'} / ${document.getElementById('vg-ap-duoi')?.value || '2.8 bar'}).\n` +
-          `- Trạm RO: TDS sau RO = ${tds} ppm (${parseFloat(tds) < 30 ? 'Đạt chuẩn chạy thận < 30 ppm' : 'CẢNH BÁO VƯỢT NGƯỠNG'}).\n\n`;
+          `- Áp lực bơm sinh hoạt GĐ1: ${pumpTxt}; van giảm áp tầng 6 (trên ${document.getElementById('vg-ap-tren')?.value || '5.2'} bar / dưới ${document.getElementById('vg-ap-duoi')?.value || '2.8'} bar).\n` +
+          `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).\n\n`;
       }
 
       if (document.getElementById('chk-sec-4')?.checked) {
@@ -9669,6 +9886,10 @@ TỔ VẬN HÀNH - NƯỚC
       renderTntPumps();
       renderPumps();
       applySectionTitles();
+      if (typeof initCnPumps === 'function') { try { initCnPumps(); } catch (e) {} }
+      if (typeof renderBlowerSelect === 'function') { try { renderBlowerSelect(); } catch (e) {} }
+      if (typeof renderCycleSelect === 'function') { try { renderCycleSelect(); } catch (e) {} }
       if (typeof applyChiefVisibility === 'function') { try { applyChiefVisibility(); } catch (e) {} }
+      if (typeof restoreChecklistState === 'function') { try { restoreChecklistState(); } catch (e) {} }
     });
   </script></body></html>
