@@ -134,6 +134,15 @@ Check your Browserslist config to be sure that your targets are set up correctly
     input:focus, textarea:focus, select:focus {
       outline: none;
     }
+    /* Hiệu ứng nhấn đơn giản cho mọi nút bấm */
+    button, [onclick] {
+      -webkit-tap-highlight-color: transparent;
+      transition: transform 0.12s ease, filter 0.12s ease;
+    }
+    button:not(:disabled):active, [onclick]:active {
+      transform: scale(0.93);
+      filter: brightness(0.94);
+    }
   </style>
 </head>
 <body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
@@ -180,6 +189,7 @@ Check your Browserslist config to be sure that your targets are set up correctly
             <span class="hidden sm:inline">Ngày trực:</span>
           </span>
           <input type="date" id="inspection-date" onchange="onDateChanged()" class="w-32 max-w-[130px] bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
+          <span id="duty-date-vn" class="text-[11px] font-extrabold text-blue-700 whitespace-nowrap" title="Ngày trực (ngày/tháng/năm)"></span>
         </div>
         <div class="flex items-center space-x-1 shrink-0">
           <button onclick="changeDayOffset(-1)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-[11px] active:scale-95 transition" title="Ngày trước">
@@ -727,8 +737,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
             <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Kiểm Tra Gần Nhất
           </h4>
           <div class="flex items-center gap-3">
-            <span class="text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteAllInspectionHistory()">Xóa hết</span>
-            <span class="w-px h-3.5 bg-slate-300"></span>
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteAllInspectionHistory()">Xóa hết</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
             <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory()">Xem tất cả</span>
           </div>
         </div>
@@ -870,8 +880,8 @@ Check your Browserslist config to be sure that your targets are set up correctly
         <div class="flex items-center justify-between mb-2">
           <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider">Nhật Ký Các Ca Gần Nhất</h4>
           <div class="flex items-center gap-3">
-            <span class="text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteAllChemicalHistory()">Xóa hết</span>
-            <span class="w-px h-3.5 bg-slate-300"></span>
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteAllChemicalHistory()">Xóa hết</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
             <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllChemicalHistory()">Xem tất cả</span>
           </div>
         </div>
@@ -2901,6 +2911,11 @@ window.FIREBASE_CONFIG = {
       '      <div id="sync-pin-status" class="text-[11px] mb-1.5"></div>' +
       '      <button onclick="openSetDeletePin()" class="px-3 py-1.5 bg-amber-50 hover:bg-amber-100 text-amber-700 font-bold rounded-xl text-[11px] border border-amber-200 active:scale-95 transition"><i class="fa-solid fa-key mr-1"></i>Đặt / đổi mã PIN xóa</button>' +
       '    </div>' +
+      '    <div class="pt-2 border-t border-slate-200">' +
+      '      <div class="text-[11px] font-bold text-slate-700 mb-1"><i class="fa-solid fa-user-shield mr-1 text-blue-500"></i>Chế độ máy trưởng</div>' +
+      '      <div id="sync-chief-status" class="text-[11px] mb-1.5"></div>' +
+      '      <button onclick="toggleChiefMode()" class="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-xl text-[11px] border border-blue-200 active:scale-95 transition"><i class="fa-solid fa-user-shield mr-1"></i><span id="chief-toggle-label">Bật chế độ máy trưởng trên máy này</span></button>' +
+      '    </div>' +
       '    <p class="text-[10px] text-slate-400 leading-relaxed">Gói miễn phí (Spark) đủ dùng cho 10 người. Dữ liệu luôn lưu trên máy trước nên mất mạng vẫn dùng được.</p>' +
       '  </div>' +
       '</div>';
@@ -2927,6 +2942,7 @@ window.FIREBASE_CONFIG = {
   window.openSyncConfigModal = function () {
     injectModal();
     if (typeof updateSyncPinStatus === 'function') { try { updateSyncPinStatus(); } catch (e) {} }
+    if (typeof updateChiefStatus === 'function') { try { updateChiefStatus(); } catch (e) {} }
     var err = document.getElementById('sync-config-error');
     if (err) err.classList.add('hidden');
     if (typeof openModal === 'function') openModal('modal-sync-config');
@@ -4481,9 +4497,10 @@ window.FIREBASE_CONFIG = {
                 <button onclick="openChemicalActionModal(${item.stt}, 'Nhap')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-[10.5px] font-bold border border-emerald-200 active:scale-95 transition" title="Nhập kho">
                   <i class="fa-solid fa-arrow-down-to-bracket mr-1 text-[9px]"></i>Nhập
                 </button>
+${isChief() ? `
                 <button onclick="openDeleteChemicalModal(${item.stt})" class="px-2 py-1 bg-slate-100 hover:bg-rose-100 text-rose-600 rounded-lg text-[10.5px] font-bold border border-slate-200 hover:border-rose-300 active:scale-95 transition" title="Xóa hóa chất">
                   <i class="fa-solid fa-trash-can text-[10px]"></i>
-                </button>
+                </button>` : ''}
               </div>
             </div>
           </div>
@@ -4643,6 +4660,7 @@ window.FIREBASE_CONFIG = {
     }
 
     function openDeleteChemicalModal(stt) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       const item = chemicalsList.find(x => x.stt === stt);
       if (!item) return;
       deletingChemStt = stt;
@@ -4873,6 +4891,7 @@ window.FIREBASE_CONFIG = {
 
     // --- Xóa lịch sử kiểm tra (từng mục / toàn bộ) ---
     function deleteInspectionItem(id) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       askConfirm('Xóa bản ghi kiểm tra', 'Bạn có chắc muốn xóa bản ghi kiểm tra này? Bản ghi đã đồng bộ trên các máy khác cũng sẽ bị xóa.', function () {
         inspectionHistory = inspectionHistory.filter(x => x.id !== id);
         saveStorage('bv_inspection_history', inspectionHistory);
@@ -4883,6 +4902,7 @@ window.FIREBASE_CONFIG = {
       });
     }
     function deleteAllInspectionHistory() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       if (!inspectionHistory.length) { showToast('Không có bản ghi nào để xóa.'); return; }
       requestDeletePin(function () {
         askConfirm('Xóa toàn bộ lịch sử', `Bạn có chắc muốn xóa <b>toàn bộ ${inspectionHistory.length} bản ghi kiểm tra</b>? Không thể hoàn tác, và sẽ đồng bộ lên tất cả các máy.`, function () {
@@ -4899,6 +4919,7 @@ window.FIREBASE_CONFIG = {
 
     // --- Xóa nhật ký hóa chất (từng ca / toàn bộ) ---
     function deleteChemicalLogItem(id) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       askConfirm('Xóa nhật ký ca', 'Bạn có chắc muốn xóa nhật ký ca này? Bản ghi đã đồng bộ trên các máy khác cũng sẽ bị xóa.', function () {
         chemicalHistory = chemicalHistory.filter(x => x.id !== id);
         saveStorage('bv_chemical_history', chemicalHistory);
@@ -4909,6 +4930,7 @@ window.FIREBASE_CONFIG = {
       });
     }
     function deleteAllChemicalHistory() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       if (!chemicalHistory.length) { showToast('Không có nhật ký nào để xóa.'); return; }
       requestDeletePin(function () {
         askConfirm('Xóa toàn bộ nhật ký', `Bạn có chắc muốn xóa <b>toàn bộ ${chemicalHistory.length} nhật ký ca</b>? Không thể hoàn tác, và sẽ đồng bộ lên tất cả các máy.`, function () {
@@ -4947,8 +4969,8 @@ window.FIREBASE_CONFIG = {
       const el = document.getElementById('sync-pin-status');
       if (!el) return;
       el.innerHTML = getAppConfig().deletePinHash
-        ? '<span class="text-emerald-600 font-bold">Đã đặt mã PIN — chỉ người biết mã mới dùng được nút "Xóa hết".</span>'
-        : '<span class="text-slate-500">Chưa đặt mã PIN — nên đặt để phân quyền xóa cho người phụ trách.</span>';
+        ? '<span class="text-emerald-600 font-bold">Đã đặt mã PIN — dùng để bật chế độ máy trưởng và xác nhận nút "Xóa hết".</span>'
+        : '<span class="text-slate-500">Chưa đặt mã PIN — nên đặt để bật chế độ máy trưởng (chỉ máy trưởng mới xóa được).</span>';
     }
     let _pinCallback = null;
     function openSetDeletePin() {
@@ -4999,6 +5021,62 @@ window.FIREBASE_CONFIG = {
       openModal('modal-pin');
     }
 
+    // --- Chế độ máy trưởng: chỉ máy trưởng mới thấy và dùng được các nút xóa ---
+    function isChief() {
+      try { return localStorage.getItem('bv_chief_device') === '1'; } catch (e) { return false; }
+    }
+    function updateChiefStatus() {
+      const el = document.getElementById('sync-chief-status');
+      const btn = document.getElementById('chief-toggle-label');
+      const chief = isChief();
+      if (el) el.innerHTML = chief
+        ? '<span class="text-emerald-600 font-bold">Máy này đang là máy trưởng — các nút xóa đang hiện trên máy này.</span>'
+        : '<span class="text-slate-500">Máy này chưa phải máy trưởng — các nút xóa đang bị ẩn.</span>';
+      if (btn) btn.textContent = chief ? 'Tắt chế độ máy trưởng' : 'Bật chế độ máy trưởng trên máy này';
+    }
+    function requestChiefPin(cb) {
+      if (!getAppConfig().deletePinHash) {
+        showToast('Hãy đặt mã PIN xóa trước (nút "Đặt / đổi mã PIN xóa" ở trên), rồi bật chế độ máy trưởng.');
+        return;
+      }
+      document.getElementById('pin-input').value = '';
+      document.getElementById('pin-message').textContent = 'Nhập mã PIN để xác nhận quyền máy trưởng (chỉ nhập 1 lần này):';
+      document.getElementById('pin-ok-btn').onclick = function () {
+        const v = document.getElementById('pin-input').value.trim();
+        if (v && pinHash(v) === getAppConfig().deletePinHash) {
+          closeModal('modal-pin');
+          if (typeof cb === 'function') cb();
+        } else showToast('Mã PIN không đúng.');
+      };
+      openModal('modal-pin');
+    }
+    function toggleChiefMode() {
+      const turnOn = !isChief();
+      requestChiefPin(function () {
+        try {
+          if (turnOn) localStorage.setItem('bv_chief_device', '1');
+          else localStorage.removeItem('bv_chief_device');
+        } catch (e) {}
+        updateChiefStatus();
+        applyChiefVisibility();
+        showToast(turnOn ? 'Đã bật chế độ máy trưởng trên máy này.' : 'Đã tắt chế độ máy trưởng trên máy này.');
+      });
+    }
+    function applyChiefVisibility() {
+      const show = isChief();
+      document.querySelectorAll('.chief-only').forEach(function (el) {
+        el.style.display = show ? '' : 'none';
+      });
+      try { if (typeof renderInspectionHistory === 'function') renderInspectionHistory(); } catch (e) {}
+      try { if (typeof renderChemicalHistory === 'function') renderChemicalHistory(); } catch (e) {}
+      try { if (typeof renderVattuList === 'function') renderVattuList(); } catch (e) {}
+      try { if (typeof renderChemicalInventory === 'function') renderChemicalInventory(); } catch (e) {}
+      const m1 = document.getElementById('modal-all-history');
+      if (m1 && !m1.classList.contains('hidden') && typeof viewAllInspectionHistory === 'function') { try { viewAllInspectionHistory(); } catch (e) {} }
+      const m2 = document.getElementById('modal-all-chem-history');
+      if (m2 && !m2.classList.contains('hidden') && typeof viewAllChemicalHistory === 'function') { try { viewAllChemicalHistory(); } catch (e) {} }
+    }
+
     function chemHistCard(l) {
       const summaryArr = [];
       if (l.consumption) {
@@ -5015,7 +5093,7 @@ window.FIREBASE_CONFIG = {
             <span>${formatDDMMYY(l.date)} (${l.shift})</span>
             <div class="flex items-center gap-1.5">
               <span class="text-purple-700">Lưu lượng: ~${l.diff || 220} m³</span>
-              <button onclick="deleteChemicalLogItem(${l.id})" title="Xóa ca này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+              ${isChief() ? `<button onclick="deleteChemicalLogItem(${l.id})" title="Xóa ca này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>` : ''}
             </div>
           </div>
           <div class="text-[11px] text-slate-600 truncate">
@@ -5062,7 +5140,7 @@ window.FIREBASE_CONFIG = {
                 <span>${formatDDMMYY(l.date)} (${l.shift})</span>
                 <div class="flex items-center gap-1.5">
                   <span class="text-purple-700 text-xs">Lưu lượng: ~${l.diff || 220} m³</span>
-                  <button onclick="deleteChemicalLogItem(${l.id})" title="Xóa ca này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+                  ${isChief() ? `<button onclick="deleteChemicalLogItem(${l.id})" title="Xóa ca này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>` : ''}
                 </div>
               </div>
               <div class="text-xs text-slate-700">${summaryArr.length > 0 ? summaryArr.join(' | ') : 'Tiêu hao định mức'}</div>
@@ -6081,10 +6159,11 @@ window.FIREBASE_CONFIG = {
               <button onclick="openVattuActionModal(${item.stt}, 'Nhap')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold border border-emerald-200 active:scale-95 transition" title="Nhập kho">
                 Nhập
               </button>
+${isChief() ? `
               <button onclick="openDeleteVattuModal(${item.stt})" class="px-2 py-1 bg-slate-100 hover:bg-rose-100 text-rose-600 rounded-lg text-[10px] font-bold border border-slate-200 hover:border-rose-300 active:scale-95 transition flex items-center space-x-1" title="Xóa vật tư này khỏi kho">
                 <i class="fa-solid fa-trash-can text-[10px]"></i>
                 <span>Xóa</span>
-              </button>
+              </button>` : ''}
             </div>
           </div>
         </div>
@@ -6098,6 +6177,7 @@ window.FIREBASE_CONFIG = {
     }
 
     function openDeleteVattuModal(stt) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
       const item = vattuList.find(x => x.stt === stt);
       if (!item) return;
       deletingVattuStt = stt;
@@ -6802,7 +6882,7 @@ window.FIREBASE_CONFIG = {
               item.rating.includes('Tốt') ? 'bg-emerald-100 text-emerald-800' :
               item.rating.includes('Xấu') || item.rating.includes('Cảnh báo') ? 'bg-rose-100 text-rose-800' : 'bg-slate-200 text-slate-700'
             }">${item.rating}</span>
-            <button onclick="deleteInspectionItem(${item.id})" title="Xóa bản ghi này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+            ${isChief() ? `<button onclick="deleteInspectionItem(${item.id})" title="Xóa bản ghi này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>` : ''}
           </div>
         </div>
       `;
@@ -6832,7 +6912,7 @@ window.FIREBASE_CONFIG = {
                 item.rating.includes('Tốt') ? 'bg-emerald-100 text-emerald-800' :
                 item.rating.includes('Xấu') ? 'bg-rose-100 text-rose-800' : 'bg-slate-200 text-slate-700'
               }">${item.rating}</span>
-              <button onclick="deleteInspectionItem(${item.id})" title="Xóa bản ghi này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>
+              ${isChief() ? `<button onclick="deleteInspectionItem(${item.id})" title="Xóa bản ghi này" class="w-6 h-6 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-500 flex items-center justify-center active:scale-95 transition"><i class="fa-solid fa-trash-can text-[10px]"></i></button>` : ''}
             </div>
           </div>
           <div class="text-slate-700 text-xs">${item.metrics}</div>
@@ -7143,7 +7223,9 @@ window.FIREBASE_CONFIG = {
       const dInp = document.getElementById('inspection-date');
       if (dInp) dInp.value = todayStr;
       const expLbl = document.getElementById('export-date-label');
-      if (expLbl) expLbl.innerText = `${dd}/${mm}/${String(yyyy).slice(-2)}`;
+      if (expLbl) expLbl.innerText = `${dd}/${mm}/${yyyy}`;
+      const vnLbl = document.getElementById('duty-date-vn');
+      if (vnLbl) vnLbl.textContent = `${dd}/${mm}/${yyyy}`;
       
       if (document.getElementById('export-from-date')) document.getElementById('export-from-date').value = todayStr;
       if (document.getElementById('export-to-date')) document.getElementById('export-to-date').value = todayStr;
@@ -7171,7 +7253,7 @@ window.FIREBASE_CONFIG = {
       const dd = String(current.getDate()).padStart(2, '0');
       dateInput.value = `${yyyy}-${mm}-${dd}`;
       const expLbl = document.getElementById('export-date-label');
-      if (expLbl) expLbl.innerText = `${dd}/${mm}/${String(yyyy).slice(-2)}`;
+      if (expLbl) expLbl.innerText = `${dd}/${mm}/${yyyy}`;
       showToast(`Đã chuyển ngày sang ${dd}/${mm}/${yyyy}`);
       onDateChanged();
     }
@@ -7181,6 +7263,8 @@ window.FIREBASE_CONFIG = {
       if (d) {
         const expLbl = document.getElementById('export-date-label');
         if (expLbl) expLbl.innerText = formatDDMMYY(d);
+        const vnLbl = document.getElementById('duty-date-vn');
+        if (vnLbl) vnLbl.textContent = formatDDMMYY(d);
       }
     }
 
@@ -8072,13 +8156,12 @@ TỔ VẬN HÀNH - NƯỚC
       if (!dStr) return '';
       if (dStr.includes('-')) {
         const p = dStr.split('-');
-        const yy = p[0].slice(-2);
-        return `${p[2]}/${p[1]}/${yy}`;
+        return `${p[2]}/${p[1]}/${p[0]}`;
       }
       if (dStr.includes('/')) {
         const p = dStr.split('/');
-        const yy = p[2].length === 4 ? p[2].slice(-2) : p[2];
-        return `${p[0]}/${p[1]}/${yy}`;
+        const yyyy = p[2].length === 2 ? ('20' + p[2]) : p[2];
+        return `${p[0]}/${p[1]}/${yyyy}`;
       }
       return dStr;
     }
@@ -9654,5 +9737,6 @@ TỔ VẬN HÀNH - NƯỚC
       renderTntPumps();
       renderPumps();
       applySectionTitles();
+      if (typeof applyChiefVisibility === 'function') { try { applyChiefVisibility(); } catch (e) {} }
     });
   </script></body></html>
