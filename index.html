@@ -189,7 +189,6 @@ Check your Browserslist config to be sure that your targets are set up correctly
             <span class="hidden sm:inline">Ngày trực:</span>
           </span>
           <input type="date" id="inspection-date" onchange="onDateChanged()" class="w-32 max-w-[130px] bg-slate-50 border border-slate-200 rounded-xl px-2 py-1 text-xs font-bold text-slate-800 focus:outline-none focus:ring-2 focus:ring-blue-500">
-          <span id="duty-date-vn" class="text-[11px] font-extrabold text-blue-700 whitespace-nowrap" title="Ngày trực (ngày/tháng/năm)"></span>
         </div>
         <div class="flex items-center space-x-1 shrink-0">
           <button onclick="changeDayOffset(-1)" class="px-2 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-[11px] active:scale-95 transition" title="Ngày trước">
@@ -759,8 +758,6 @@ Check your Browserslist config to be sure that your targets are set up correctly
             </h3>
             <div class="flex items-center space-x-2 text-[10.5px] text-purple-200">
               <span>Bệnh viện đa khoa Vĩnh Phúc: <span id="chem-total-badge" class="font-bold text-white">6</span> loại</span>
-              <span>•</span>
-              <span class="bg-white/15 px-2 py-0.5 rounded-lg text-amber-200 font-bold"><i class="fa-solid fa-boxes-stacked mr-1"></i>Tổng tồn: <span id="chem-total-qty-badge" class="text-white">...</span></span>
             </div>
           </div>
           <div class="flex items-center space-x-1.5">
@@ -3991,6 +3988,7 @@ window.FIREBASE_CONFIG = {
     }
 
     function editSectionTitle(key) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được sửa tên đề mục.'); return; }
       editingTitleKey = key;
       const current = sectionTitles[key] || document.getElementById(key)?.innerText || '';
       document.getElementById('edit-title-input').value = current;
@@ -4047,9 +4045,9 @@ window.FIREBASE_CONFIG = {
                 <span class="font-extrabold text-slate-900 text-xs">${d.name}</span>
                 <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-blue-50 text-blue-700">Tổng: ${totalKhoa} TB</span>
               </div>
-              <button type="button" onclick="openEditDepartmentModal(${index})" class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-[10px] font-bold border border-blue-200 active:scale-95 transition">
+              ${isChief() ? `<button type="button" onclick="openEditDepartmentModal(${index})" class="px-2 py-1 bg-blue-50 hover:bg-blue-100 text-blue-700 rounded-lg text-[10px] font-bold border border-blue-200 active:scale-95 transition">
                 <i class="fa-solid fa-pen-to-square mr-1"></i>Sửa SL / Tên
-              </button>
+              </button>` : ''}
             </div>
             
             <div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-5 gap-1.5">
@@ -4063,6 +4061,7 @@ window.FIREBASE_CONFIG = {
     }
 
     function openEditDepartmentModal(index) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được sửa thiết bị.'); return; }
       editingDeptIndex = index;
       const d = departments[index];
       document.getElementById('edit-dept-name-title').innerText = `Sửa Thiết Bị - ${d.name}`;
@@ -4377,11 +4376,6 @@ window.FIREBASE_CONFIG = {
       const container = document.getElementById('chem-overview-badges');
       if (!container) return;
 
-      let totalStock = 0;
-      chemicalsList.forEach(c => totalStock += (c.qty || 0));
-      const totalQtyBadge = document.getElementById('chem-total-qty-badge');
-      if (totalQtyBadge) totalQtyBadge.innerText = totalStock.toLocaleString();
-
       container.innerHTML = chemicalsList.map(item => {
         const isLow = item.qty <= (item.minSafe || 0);
         const shortName = item.name.replace(/\(.*?\)/g, '').trim();
@@ -4491,12 +4485,13 @@ window.FIREBASE_CONFIG = {
             <div class="flex items-center justify-between pt-1 border-t border-slate-100 text-xs">
               <span class="text-[10px] text-slate-400"><i class="fa-solid fa-clock-rotate-left mr-1"></i>Dự trữ: ~${item.norm > 0 ? Math.floor(item.qty / item.norm) : 30} ca</span>
               <div class="flex space-x-1.5">
+${isChief() ? `
                 <button onclick="openChemicalActionModal(${item.stt}, 'Xuat')" class="px-2.5 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[10.5px] font-bold border border-rose-200 active:scale-95 transition" title="Xuất kho">
                   <i class="fa-solid fa-arrow-up-from-bracket mr-1 text-[9px]"></i>Xuất
                 </button>
                 <button onclick="openChemicalActionModal(${item.stt}, 'Nhap')" class="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-[10.5px] font-bold border border-emerald-200 active:scale-95 transition" title="Nhập kho">
                   <i class="fa-solid fa-arrow-down-to-bracket mr-1 text-[9px]"></i>Nhập
-                </button>
+                </button>` : ''}
 ${isChief() ? `
                 <button onclick="openDeleteChemicalModal(${item.stt})" class="px-2 py-1 bg-slate-100 hover:bg-rose-100 text-rose-600 rounded-lg text-[10.5px] font-bold border border-slate-200 hover:border-rose-300 active:scale-95 transition" title="Xóa hóa chất">
                   <i class="fa-solid fa-trash-can text-[10px]"></i>
@@ -4515,6 +4510,7 @@ ${isChief() ? `
     }
 
     function openAddChemicalModal() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được thêm hóa chất.'); return; }
       document.getElementById('new-chem-name').value = '';
       document.getElementById('new-chem-qty').value = '100';
       document.getElementById('new-chem-norm').value = '10';
@@ -4681,6 +4677,7 @@ ${isChief() ? `
     }
 
     function openChemicalActionModal(stt, type) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được nhập/xuất kho hóa chất.'); return; }
       const item = chemicalsList.find(x => x.stt === stt);
       if (!item) return;
       activeChemActionStt = stt;
@@ -5065,6 +5062,10 @@ ${isChief() ? `
     function applyChiefVisibility() {
       const show = isChief();
       document.querySelectorAll('.chief-only').forEach(function (el) {
+        el.style.display = show ? '' : 'none';
+      });
+      // Các nút sửa/thêm tĩnh: 13 nút sửa tên đề mục + nút thêm hóa chất/vật tư
+      document.querySelectorAll('[onclick^="editSectionTitle("], [onclick="openAddChemicalModal()"], [onclick="openAddVattuModal()"], [onclick="openImportChemicalTemplateModal()"], [onclick="openImportVattuTemplateModal()"]').forEach(function (el) {
         el.style.display = show ? '' : 'none';
       });
       try { if (typeof renderInspectionHistory === 'function') renderInspectionHistory(); } catch (e) {}
@@ -5866,6 +5867,7 @@ ${isChief() ? `
     }
 
     function openImportChemicalTemplateModal() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được nạp danh mục hóa chất.'); return; }
       parsedChemicalImportItems = [];
       const fileInp = document.getElementById('chem-template-file-input');
       if (fileInp) fileInp.value = '';
@@ -6153,12 +6155,13 @@ ${isChief() ? `
               <span class="text-[10px] text-slate-400 ml-0.5">${item.unit}</span>
             </div>
             <div class="flex space-x-1">
+${isChief() ? `
               <button onclick="openVattuActionModal(${item.stt}, 'Xuat')" class="px-2 py-1 bg-rose-50 hover:bg-rose-100 text-rose-700 rounded-lg text-[10px] font-bold border border-rose-200 active:scale-95 transition" title="Xuất kho">
                 Xuất
               </button>
               <button onclick="openVattuActionModal(${item.stt}, 'Nhap')" class="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-700 rounded-lg text-[10px] font-bold border border-emerald-200 active:scale-95 transition" title="Nhập kho">
                 Nhập
-              </button>
+              </button>` : ''}
 ${isChief() ? `
               <button onclick="openDeleteVattuModal(${item.stt})" class="px-2 py-1 bg-slate-100 hover:bg-rose-100 text-rose-600 rounded-lg text-[10px] font-bold border border-slate-200 hover:border-rose-300 active:scale-95 transition flex items-center space-x-1" title="Xóa vật tư này khỏi kho">
                 <i class="fa-solid fa-trash-can text-[10px]"></i>
@@ -6197,6 +6200,7 @@ ${isChief() ? `
     }
 
     function openVattuActionModal(stt, type) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được nhập/xuất kho vật tư.'); return; }
       const item = vattuList.find(x => x.stt === stt);
       if (!item) return;
       activeVattuActionStt = stt;
@@ -6259,6 +6263,7 @@ ${isChief() ? `
     }
 
     function openAddVattuModal() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được thêm vật tư.'); return; }
       document.getElementById('new-vattu-name').value = '';
       document.getElementById('new-vattu-qty').value = '10';
       initVattuFormOptions();
@@ -7096,6 +7101,7 @@ ${isChief() ? `
     }
 
     function openEditPumpModal(pumpId) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được sửa trạng thái bơm.'); return; }
       editingPumpId = pumpId;
       const p = pumps.find(x => x.id === pumpId);
       if (!p) return;
@@ -7160,7 +7166,7 @@ ${isChief() ? `
               <div class="text-[11px] text-slate-500"><i class="fa-solid fa-location-dot text-[10px] mr-1"></i>${p.loc}</div>
               <div class="text-[10px] text-slate-400">Lưu lượng: ${p.flow} | Công suất: ${p.power}</div>
             </div>
-            <button onclick="openEditPumpModal(${p.id})" class="px-2.5 py-1 rounded-xl text-[10px] font-bold flex items-center space-x-1 shrink-0 ${
+            ${isChief() ? `<button onclick="openEditPumpModal(${p.id})" class="px-2.5 py-1 rounded-xl text-[10px] font-bold flex items-center space-x-1 shrink-0 ${
               p.status === 'running' ? 'bg-emerald-100 text-emerald-800' :
               p.status === 'warning' ? 'bg-amber-100 text-amber-800' :
               p.status === 'repairing' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600'
@@ -7171,7 +7177,17 @@ ${isChief() ? `
                 p.status === 'repairing' ? 'Đang sửa' : 'Dự phòng / Tắt'
               }</span>
               <i class="fa-solid fa-pencil text-[9px]"></i>
-            </button>
+            </button>` : `<span class="px-2.5 py-1 rounded-xl text-[10px] font-bold flex items-center space-x-1 shrink-0 ${
+              p.status === 'running' ? 'bg-emerald-100 text-emerald-800' :
+              p.status === 'warning' ? 'bg-amber-100 text-amber-800' :
+              p.status === 'repairing' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600'
+            }">
+              <span>${
+                p.status === 'running' ? 'Đang chạy' :
+                p.status === 'warning' ? 'Cần bảo dưỡng' :
+                p.status === 'repairing' ? 'Đang sửa' : 'Dự phòng / Tắt'
+              }</span>
+            </span>`}
           </div>
           ${p.note ? `<div class="text-[11px] text-blue-700 font-medium bg-blue-50/60 p-1.5 rounded-lg border border-blue-100 flex items-center"><i class="fa-solid fa-circle-info text-[10px] mr-1 text-blue-500"></i>${p.note}</div>` : ''}
         </div>
@@ -7224,8 +7240,6 @@ ${isChief() ? `
       if (dInp) dInp.value = todayStr;
       const expLbl = document.getElementById('export-date-label');
       if (expLbl) expLbl.innerText = `${dd}/${mm}/${yyyy}`;
-      const vnLbl = document.getElementById('duty-date-vn');
-      if (vnLbl) vnLbl.textContent = `${dd}/${mm}/${yyyy}`;
       
       if (document.getElementById('export-from-date')) document.getElementById('export-from-date').value = todayStr;
       if (document.getElementById('export-to-date')) document.getElementById('export-to-date').value = todayStr;
@@ -7263,8 +7277,6 @@ ${isChief() ? `
       if (d) {
         const expLbl = document.getElementById('export-date-label');
         if (expLbl) expLbl.innerText = formatDDMMYY(d);
-        const vnLbl = document.getElementById('duty-date-vn');
-        if (vnLbl) vnLbl.textContent = formatDDMMYY(d);
       }
     }
 
@@ -8899,6 +8911,7 @@ TỔ VẬN HÀNH - NƯỚC
     }
 
     function openImportVattuTemplateModal() {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được nạp danh mục vật tư.'); return; }
       parsedVattuImportItems = [];
       const fileInp = document.getElementById('vattu-template-file-input');
       if (fileInp) fileInp.value = '';
