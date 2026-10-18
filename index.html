@@ -309,6 +309,58 @@
                 <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Rò rỉ / Kẹt</button>
               </div>
             </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 flex items-center justify-between">
+              <span class="text-slate-700 font-medium">5. Máy thổi khí 1:</span>
+              <div class="flex items-center space-x-2 shrink-0">
+                <label class="flex items-center space-x-1 text-slate-600">
+                  <input type="checkbox" id="xlnt-blower1-run" checked style="accent-color:#059669" class="w-4 h-4">
+                  <span class="text-[11px] font-semibold">Chạy</span>
+                </label>
+                <div class="flex space-x-1">
+                  <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
+                  <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Lỗi / Hỏng</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 flex items-center justify-between">
+              <span class="text-slate-700 font-medium">6. Máy thổi khí 2:</span>
+              <div class="flex items-center space-x-2 shrink-0">
+                <label class="flex items-center space-x-1 text-slate-600">
+                  <input type="checkbox" id="xlnt-blower2-run" checked style="accent-color:#059669" class="w-4 h-4">
+                  <span class="text-[11px] font-semibold">Chạy</span>
+                </label>
+                <div class="flex space-x-1">
+                  <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
+                  <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Lỗi / Hỏng</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 flex items-center justify-between">
+              <span class="text-slate-700 font-medium">7. Máy thổi khí 3:</span>
+              <div class="flex items-center space-x-2 shrink-0">
+                <label class="flex items-center space-x-1 text-slate-600">
+                  <input type="checkbox" id="xlnt-blower3-run" style="accent-color:#059669" class="w-4 h-4">
+                  <span class="text-[11px] font-semibold">Chạy</span>
+                </label>
+                <div class="flex space-x-1">
+                  <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
+                  <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Lỗi / Hỏng</button>
+                </div>
+              </div>
+            </div>
+            <div class="p-2.5 rounded-xl bg-slate-50 flex items-center justify-between">
+              <span class="text-slate-700 font-medium">8. Máy thổi khí 4:</span>
+              <div class="flex items-center space-x-2 shrink-0">
+                <label class="flex items-center space-x-1 text-slate-600">
+                  <input type="checkbox" id="xlnt-blower4-run" style="accent-color:#059669" class="w-4 h-4">
+                  <span class="text-[11px] font-semibold">Chạy</span>
+                </label>
+                <div class="flex space-x-1">
+                  <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
+                  <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Lỗi / Hỏng</button>
+                </div>
+              </div>
+            </div>
             <div class="p-2.5 rounded-xl bg-blue-50/70 border border-blue-100 flex items-center justify-between">
               <span class="text-blue-900 font-bold">Đánh giá chung trạm XLNT:</span>
               <select id="xlnt-overall-rating" class="bg-white border border-blue-200 text-blue-900 font-bold rounded-lg px-2 py-1 text-xs">
@@ -399,6 +451,38 @@
               </div>
             </div>
 
+            <!-- Áp lực từng bơm cấp sinh hoạt GĐ2 -->
+            <div class="p-2.5 rounded-xl bg-slate-50 space-y-1.5">
+              <div class="flex justify-between items-center">
+                <span class="font-bold text-slate-700">Áp lực từng bơm sinh hoạt GĐ2 (bar):</span>
+                <span class="text-[10px] text-slate-400">Chuẩn: 4.2 - 4.8 bar</span>
+              </div>
+              <div class="grid grid-cols-2 gap-2">
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[10px] font-bold text-slate-600">Bơm 2.1</label>
+                    <button type="button" id="cn-run-21" onclick="toggleCnPump('21')" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-emerald-100 text-emerald-700">Chạy</button>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('p-cn-21', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="p-cn-21" value="4.5" placeholder="—" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('p-cn-21', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
+                  </div>
+                </div>
+                <div class="bg-white rounded-lg border border-slate-200 p-1.5 space-y-1">
+                  <div class="flex items-center justify-between">
+                    <label class="text-[10px] font-bold text-slate-600">Bơm 2.2</label>
+                    <button type="button" id="cn-run-22" onclick="toggleCnPump('22')" class="text-[9px] font-bold px-1.5 py-0.5 rounded bg-slate-200 text-slate-500">Nghỉ</button>
+                  </div>
+                  <div class="flex items-center space-x-1">
+                    <button onclick="adjustValue('p-cn-22', -0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">-</button>
+                    <input type="number" step="0.1" id="p-cn-22" value="" placeholder="—" class="w-full bg-slate-50 border rounded py-1 text-center font-bold text-xs min-w-0">
+                    <button onclick="adjustValue('p-cn-22', 0.1, 1)" class="w-6 h-6 rounded bg-slate-50 border text-xs font-bold shrink-0">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <!-- Van giảm áp tầng 6 -->
             <div class="p-2.5 rounded-xl bg-slate-50 space-y-1.5">
               <span class="font-bold text-slate-700 block">Van giảm áp trục kỹ thuật Tầng 6 (T12 xuống T6):</span>
@@ -451,6 +535,13 @@
           </div>
           <div class="p-2 rounded-xl bg-slate-50 flex items-center justify-between">
             <span class="text-slate-700 font-medium">Tiếng kêu & Nhiệt độ bơm 1.1, 1.2, 1.3:</span>
+            <div class="flex space-x-1 shrink-0">
+              <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
+              <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Rung / Quá nhiệt</button>
+            </div>
+          </div>
+          <div class="p-2 rounded-xl bg-slate-50 flex items-center justify-between">
+            <span class="text-slate-700 font-medium">Tiếng kêu & Nhiệt độ bơm 2.1, 2.2:</span>
             <div class="flex space-x-1 shrink-0">
               <button type="button" onclick="setToggle(this, 'ok')" class="px-2.5 py-1 rounded-lg bg-emerald-600 text-white font-bold">Bình thường</button>
               <button type="button" onclick="setToggle(this, 'err')" class="px-2.5 py-1 rounded-lg bg-slate-200 text-slate-700 font-medium">Rung / Quá nhiệt</button>
@@ -2704,7 +2795,7 @@
    Config đã tích hợp sẵn trong file (window.FIREBASE_CONFIG) nhưng KHÔNG tự
    kết nối khi mở link — để link có lọt ra ngoài cũng không đồng bộ dữ liệu team.
    Trên mỗi máy: mở app → bấm nút đám mây ☁ trên header → bấm nút ẩn
-   "firebaseConfig" (chữ nhỏ mờ phía dưới nút Lưu & Kết nối) → máy tự kết nối,
+   "Báo lỗi" (chữ nhỏ mờ phía dưới nút Lưu & Kết nối) → máy tự kết nối,
    các lần mở sau tự động đồng bộ luôn, không cần bấm lại.
    Máy nào đã từng đồng bộ trước đây vẫn giữ nguyên, không cần bấm lại.
    (Vẫn hỗ trợ dán config khác vào ô bên dưới nếu muốn đổi project.)
@@ -2727,7 +2818,7 @@ window.FIREBASE_CONFIG = {
   var COLLECTION = 'team_state';          // 1 document / 1 key dữ liệu (bv_*)
   var META_KEY = 'bv_sync_meta';          // { key: timestampMs } lưu local
   var CFG_KEY = 'bv_firebase_config';     // config do người dùng dán trong app
-  var UNLOCK_KEY = 'bv_cfg_unlocked';     // máy này đã bấm nút ẩn "firebaseConfig"
+  var UNLOCK_KEY = 'bv_cfg_unlocked';     // máy này đã bấm nút ẩn "Báo lỗi"
   var DISABLE_KEY = 'bv_sync_disabled';   // bấm "Ngắt" → bỏ qua cả config nhúng sẵn trong file
   var DEVICE_KEY = 'bv_device_id';
   var SYNCED_PREFIX = 'bv_';             // chỉ đồng bộ các key của app
@@ -2745,7 +2836,7 @@ window.FIREBASE_CONFIG = {
 
   // Config ưu tiên: người dùng dán trong app > config tích hợp sẵn (đã bấm nút ẩn)
   // Config nhúng sẵn KHÔNG tự dùng khi mở link — tránh link lọt ra ngoài.
-  // Chỉ dùng khi máy này đã bấm nút ẩn "firebaseConfig", hoặc máy đã từng
+  // Chỉ dùng khi máy này đã bấm nút ẩn "Báo lỗi", hoặc máy đã từng
   // đồng bộ trước đây (giữ nguyên cho các máy trong tổ đang dùng tốt).
   function getConfig() {
     try { if (localStorage.getItem(DISABLE_KEY) === '1') return null; } catch (e) {}
@@ -2770,7 +2861,7 @@ window.FIREBASE_CONFIG = {
     return null;
   }
 
-  // Nút ẩn "firebaseConfig": dùng config tích hợp sẵn trong file để kết nối.
+  // Nút ẩn "Báo lỗi": dùng config tích hợp sẵn trong file để kết nối.
   // Chỉ cần bấm 1 lần trên mỗi máy; các lần mở sau tự động đồng bộ.
   window.unlockEmbeddedConfig = function () {
     try { localStorage.setItem(UNLOCK_KEY, '1'); localStorage.removeItem(DISABLE_KEY); } catch (e) {}
@@ -2895,7 +2986,7 @@ window.FIREBASE_CONFIG = {
       '      <li><b>Build → Firestore Database</b> → Create database → <b>Start in test mode</b> → vùng <b>asia-southeast1</b></li>' +
       '      <li><b>Build → Authentication</b> → Sign-in method → bật <b>Anonymous</b></li>' +
       '      <li>Bánh răng ⚙️ <b>Project settings</b> → <b>Your apps</b> → bấm <b>&lt;/&gt;</b> → Register app → copy khối <b>firebaseConfig</b></li>' +
-      '      <li>Config đã tích hợp sẵn trong app. Bấm nút <b>firebaseConfig</b> (chữ nhỏ mờ phía dưới) để kết nối — chỉ cần làm 1 lần trên mỗi máy, các lần sau mở lên tự đồng bộ.</li>' +
+      '      <li>Config đã tích hợp sẵn trong app. Bấm nút <b>Báo lỗi</b> (chữ nhỏ mờ phía dưới) để kết nối — chỉ cần làm 1 lần trên mỗi máy, các lần sau mở lên tự đồng bộ.</li>' +
       '      <li>Chỉ dùng ô dán bên dưới khi muốn đổi sang project Firebase khác.</li>' +
       '    </ol>' +
       '    <textarea id="sync-config-input" rows="6" placeholder=\'Dán khối firebaseConfig vào đây, ví dụ:\n{\n  apiKey: "AIza...",\n  authDomain: "ten-project.firebaseapp.com",\n  projectId: "ten-project",\n  appId: "1:123:web:abc"\n}\' class="w-full bg-slate-50 border border-slate-200 rounded-xl p-2.5 text-[11px] font-mono text-slate-800"></textarea>' +
@@ -2904,7 +2995,7 @@ window.FIREBASE_CONFIG = {
       '      <button onclick="saveSyncConfig()" class="flex-1 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-xs active:scale-95"><i class="fa-solid fa-link mr-1"></i>Lưu &amp; Kết nối</button>' +
       (cfg ? '      <button onclick="disconnectSync()" class="px-4 py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl text-xs border border-rose-200 active:scale-95">Ngắt</button>' : '') +
       '    </div>' +
-      '    <button onclick="unlockEmbeddedConfig()" title="Dùng config tích hợp sẵn trong app để kết nối đồng bộ" class="w-full text-center text-[10px] text-slate-300 hover:text-slate-500 py-1.5 active:scale-95 transition">firebaseConfig</button>' +
+      '    <button onclick="unlockEmbeddedConfig()" title="Dùng config tích hợp sẵn trong app để kết nối đồng bộ" class="w-full text-center text-[10px] text-slate-300 hover:text-slate-500 py-1.5 active:scale-95 transition">Báo lỗi</button>' +
       '    <div class="pt-2 border-t border-slate-200">' +
       '      <div class="text-[11px] font-bold text-slate-700 mb-1"><i class="fa-solid fa-key mr-1 text-amber-500"></i>Phân quyền xóa dữ liệu</div>' +
       '      <div id="sync-pin-status" class="text-[11px] mb-1.5"></div>' +
@@ -6828,7 +6919,7 @@ ${isChief() ? `
         notes = document.getElementById('xlnt-notes')?.value || 'Hoạt động bình thường';
       } else if (activeSub === 'capnuoc') {
         systemName = 'Cấp Nước Sinh Hoạt';
-        const pumpTxt = ['11', '12', '13'].map(cnPumpText).join(' | ');
+        const pumpTxt = ['11', '12', '13', '21', '22'].map(cnPumpText).join(' | ');
         metrics = `Áp lực: ${pumpTxt} | Bể ngầm 800m³`;
         rating = document.getElementById('cn-overall-rating')?.value || 'BT';
         notes = document.getElementById('cn-notes')?.value || 'Áp lực bơm ổn định';
@@ -7303,8 +7394,8 @@ ${isChief() ? `
       if (id.includes('tds')) validateRO();
     }
 
-    // --- Trạng thái chạy/nghỉ từng bơm cấp nước GĐ1 (mặc định chỉ bơm 1.1 chạy) ---
-    const cnPumpRun = { '11': true, '12': false, '13': false };
+    // --- Trạng thái chạy/nghỉ từng bơm cấp nước GĐ1 & GĐ2 (mặc định chỉ bơm 1.1 và 2.1 chạy) ---
+    const cnPumpRun = { '11': true, '12': false, '13': false, '21': true, '22': false };
     function toggleCnPump(id) {
       cnPumpRun[id] = !cnPumpRun[id];
       applyCnPumpState(id);
@@ -7324,9 +7415,9 @@ ${isChief() ? `
         else if (!inp.value) inp.value = '4.5';
       }
     }
-    function initCnPumps() { ['11', '12', '13'].forEach(applyCnPumpState); }
+    function initCnPumps() { ['11', '12', '13', '21', '22'].forEach(applyCnPumpState); }
     function cnPumpText(id) {
-      const label = '1.' + id.slice(-1);
+      const label = id.charAt(0) + '.' + id.slice(-1);
       if (!cnPumpRun[id]) return 'Bơm ' + label + ': Không chạy';
       const v = document.getElementById('p-cn-' + id)?.value;
       return 'Bơm ' + label + ': ' + (v ? v + ' bar' : 'Không chọn');
@@ -7455,7 +7546,7 @@ ${isChief() ? `
       });
       if (st.cnPumpRun && typeof cnPumpRun !== 'undefined') {
         Object.keys(st.cnPumpRun).forEach(function (k) { cnPumpRun[k] = !!st.cnPumpRun[k]; });
-        ['11', '12', '13'].forEach(applyCnPumpState);
+        ['11', '12', '13', '21', '22'].forEach(applyCnPumpState);
       }
       if (st.toggles) {
         checklistToggleGroups().forEach(function (g, gi) {
@@ -7649,13 +7740,14 @@ TỔ VẬN HÀNH - NƯỚC
         const roStatus = worstRO && worstRO.sau >= 30 ? `CẢNH BÁO ${worstRO.zone} VƯỢT NGƯỠNG` : 'Đạt chuẩn chạy thận < 30 ppm';
         const vgTren = document.getElementById('vg-ap-tren')?.value || '3.5';
         const vgDuoi = document.getElementById('vg-ap-duoi')?.value || '3.0';
+        const pumpTxtGd = ['11', '12', '13', '21', '22'].map(cnPumpText).join('; ');
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:
 ` +
           `- Bể ngầm 800 m³: Mức nước 75%, van phao cơ tự động mở tốt.
 ` +
           `- Cụm 4 bể composite mái T12: Đầy nước, phao điện ngắt tốt.
 ` +
-          `- Áp lực bơm sinh hoạt: Đạt 4.5 bar ổn định; van giảm áp tầng 6 đạt áp trên ${vgTren} / dưới ${vgDuoi} bar.
+          `- Áp lực bơm sinh hoạt GĐ1 & GĐ2: ${pumpTxtGd}; van giảm áp tầng 6 đạt áp trên ${vgTren} / dưới ${vgDuoi} bar.
 ` +
           `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).
 
@@ -9802,12 +9894,12 @@ TỔ VẬN HÀNH - NƯỚC
         const tdsZ1 = roZoneVal('sau', 'z1'), tdsZ3 = roZoneVal('sau', 'z3');
         const worstRO = roTdsWorst();
         const roStatus = worstRO && worstRO.sau >= 30 ? `CẢNH BÁO ${worstRO.zone} VƯỢT NGƯỠNG` : 'Đạt chuẩn chạy thận < 30 ppm';
-        const pumpTxt = ['11', '12', '13'].map(cnPumpText).join('; ');
+        const pumpTxt = ['11', '12', '13', '21', '22'].map(cnPumpText).join('; ');
         const beNgam = document.getElementById('cn-be-ngam')?.value || 'Trung bình (50-80%)';
         out += `III. HỆ THỐNG CẤP NƯỚC SINH HOẠT & LỌC RO:\n` +
           `- Bể ngầm 800 m³: Mức nước ${beNgam}, van phao cơ tự động mở tốt.\n` +
           `- Cụm 4 bể composite mái T12: Đầy nước, phao điện ngắt tốt.\n` +
-          `- Áp lực bơm sinh hoạt GĐ1: ${pumpTxt}; van giảm áp tầng 6 (trên ${document.getElementById('vg-ap-tren')?.value || '3.5'} bar / dưới ${document.getElementById('vg-ap-duoi')?.value || '3.0'} bar).\n` +
+          `- Áp lực bơm sinh hoạt GĐ1 & GĐ2: ${pumpTxt}; van giảm áp tầng 6 (trên ${document.getElementById('vg-ap-tren')?.value || '3.5'} bar / dưới ${document.getElementById('vg-ap-duoi')?.value || '3.0'} bar).\n` +
           `- Trạm RO: TDS sau RO Zone 1 = ${tdsZ1} ppm, Zone 3 = ${tdsZ3} ppm (${roStatus}).\n\n`;
       }
 
