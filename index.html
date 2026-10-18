@@ -44,6 +44,7 @@
     .opacity-40 { opacity: 0.4; }
     .modal-backdrop {
       background-color: rgba(15, 23, 42, 0.65);
+      -webkit-backdrop-filter: blur(4px);
       backdrop-filter: blur(4px);
     }
     input, textarea, select {
@@ -65,7 +66,7 @@
     }
   </style>
 </head>
-<body class="bg-slate-100 text-slate-800 antialiased min-h-screen">
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen" ontouchstart="">
 
   <div id="toast-container" class="fixed top-4 inset-x-4 z-50 flex flex-col items-center space-y-2 pointer-events-none"></div>
 
@@ -4064,6 +4065,20 @@ window.FIREBASE_CONFIG = {
       }, 2500);
     }
 
+    // iOS Safari: link blob + a.download thường chỉ mở xem trước, không tải thẳng về máy.
+    // Trên mobile, ưu tiên mở Share Sheet để gửi thẳng file qua Zalo / lưu vào Tệp.
+    function shareFileOnMobile(blob, fileName) {
+      try {
+        var ua = navigator.userAgent || '';
+        var isMobile = /iPhone|iPad|iPod|Android/i.test(ua);
+        if (!isMobile || !navigator.canShare) return false;
+        var file = new File([blob], fileName, { type: blob.type || 'application/octet-stream' });
+        if (!navigator.canShare({ files: [file] })) return false;
+        navigator.share({ files: [file], title: fileName }).catch(function () {});
+        return true;
+      } catch (e) { return false; }
+    }
+
     function openModal(id) {
       const el = document.getElementById(id);
       if (el) el.classList.remove('hidden');
@@ -5367,9 +5382,11 @@ ${isChief() ? `
     function downloadChemLogText() {
       const text = buildChemLogText();
       const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const fileName = `NhatKy_HoaChat_${new Date().toISOString().split('T')[0]}.txt`;
+      if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file nhật ký hóa chất!'); return; }
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `NhatKy_HoaChat_${new Date().toISOString().split('T')[0]}.txt`;
+      a.download = fileName;
       document.body.appendChild(a);
       a.click();
       setTimeout(() => { if (a.parentNode) document.body.removeChild(a); URL.revokeObjectURL(a.href); }, 1500);
@@ -5935,6 +5952,7 @@ ${isChief() ? `
         ]);
         const blob = new Blob([docxBytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         const fileName = 'BieuMau_NhapHoaChat_BVDKVinhPhuc.docx';
+        if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file: ' + fileName); return; }
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
@@ -7936,9 +7954,11 @@ TỔ VẬN HÀNH - NƯỚC
       const text = generateCustomReportText();
       const date = document.getElementById('inspection-date')?.value || '2026-10-16';
       const blob = new Blob([text], { type: 'text/plain;charset=utf-8' });
+      const fileName = `BaoCao_ToNuoc_BVDKVinhPhuc_${date}.txt`;
+      if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file báo cáo!'); return; }
       const a = document.createElement('a');
       a.href = URL.createObjectURL(blob);
-      a.download = `BaoCao_ToNuoc_BVDKVinhPhuc_${date}.txt`;
+      a.download = fileName;
       a.click();
       showToast('Đã tải xuống file Báo Cáo Text (.txt)!');
     }
@@ -8153,6 +8173,8 @@ TỔ VẬN HÀNH - NƯỚC
           showToast('Đã tải xuống file Excel (.xlsx): ' + fileName);
           return;
         }
+
+        if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file Excel: ' + fileName); return; }
 
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -8375,6 +8397,8 @@ TỔ VẬN HÀNH - NƯỚC
           return;
         }
 
+        if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file Word: ' + fileName); return; }
+
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.style.display = 'none';
@@ -8406,6 +8430,8 @@ TỔ VẬN HÀNH - NƯỚC
           showToast('Đã tải xuống: ' + fileName);
           return;
         }
+
+        if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file: ' + fileName); return; }
 
         const url = window.URL.createObjectURL(blob);
         const a = document.createElement('a');
@@ -9168,6 +9194,7 @@ TỔ VẬN HÀNH - NƯỚC
         ]);
         const blob = new Blob([docxBytes], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
         const fileName = 'BieuMau_NhapVatTu_BVDKVinhPhuc.docx';
+        if (shareFileOnMobile(blob, fileName)) { showToast('Đã mở chia sẻ file: ' + fileName); return; }
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
         a.href = url;
