@@ -7489,33 +7489,50 @@ ${isChief() ? `
     function renderBlowerSelect() { renderOptionSelect('blower'); }
     function renderCycleSelect() { renderOptionSelect('cycle'); }
     function manageOptionList(kind) {
-      if (typeof isChief === 'function' && !isChief()) { alert('Chỉ máy trưởng mới sửa được danh sách này.'); return; }
+      if (typeof isChief === 'function' && !isChief()) { showToast('Chỉ máy trưởng mới sửa được danh sách này.', 'error'); return; }
       const name = kind === 'blower' ? 'Máy thổi khí' : 'Chu kỳ lọc / rửa';
       const key = kind === 'blower' ? 'blowerOptions' : 'cycleOptions';
       let list = getOptionList(kind);
+      let pendingDelete = -1; // mục đang chờ gõ OK để xác nhận xóa
       for (;;) {
         const lines = list.map(function (t, i) { return (i + 1) + '. ' + t; }).join('\n');
         const inp = prompt(name + ' — danh sách hiện tại:\n' + lines +
-          '\n\nNhập lệnh (bỏ trống / Hủy để xong):\n• them <tên> → thêm mục mới\n• sua <số> <tên mới> → sửa mục\n• xoa <số> → xóa mục');
+          '\n\nNhập lệnh (bỏ trống / Hủy để xong):\n• them <tên> → thêm mục mới\n• sua <số> <tên mới> → sửa mục\n• xoa <số> → xóa mục (gõ OK để xác nhận)');
         if (inp == null || !inp.trim()) break;
-        const m = inp.trim().match(/^(them|sua|xoa)\s*(.*)$/i);
-        if (!m) { alert('Lệnh không hợp lệ. Dùng: them / sua / xoa.'); continue; }
+        const raw = inp.trim();
+        if (pendingDelete !== -1) {
+          if (raw.toLowerCase() === 'ok') {
+            const removed = list.splice(pendingDelete, 1)[0];
+            pendingDelete = -1;
+            showToast('Đã xóa "' + removed + '"', 'success');
+            continue;
+          }
+          pendingDelete = -1;
+          showToast('Đã hủy lệnh xóa.', 'warning');
+        }
+        const m = raw.match(/^(them|sua|xoa)\s*(.*)$/i);
+        if (!m) { showToast('Lệnh không hợp lệ. Dùng: them / sua / xoa.', 'warning'); pendingDelete = -1; continue; }
         const cmd = m[1].toLowerCase(), rest = m[2].trim();
         if (cmd === 'them') {
-          if (!rest) { alert('Nhập tên mục cần thêm. Vd: them Máy 1 + Máy 3'); continue; }
+          pendingDelete = -1;
+          if (!rest) { showToast('Nhập tên mục cần thêm. Vd: them Máy 1 + Máy 3', 'warning'); continue; }
           list.push(rest);
+          showToast('Đã thêm "' + rest + '"', 'success');
         } else if (cmd === 'xoa') {
           const idx = parseInt(rest, 10) - 1;
-          if (isNaN(idx) || idx < 0 || idx >= list.length) { alert('Số thứ tự không đúng.'); continue; }
-          if (list.length <= 1) { alert('Danh sách phải còn ít nhất 1 mục.'); continue; }
-          if (!confirm('Xóa "' + list[idx] + '"?')) continue;
-          list.splice(idx, 1);
+          if (isNaN(idx) || idx < 0 || idx >= list.length) { showToast('Số thứ tự không đúng.', 'warning'); pendingDelete = -1; continue; }
+          if (list.length <= 1) { showToast('Danh sách phải còn ít nhất 1 mục.', 'warning'); pendingDelete = -1; continue; }
+          pendingDelete = idx;
+          showToast('Gõ "OK" để xác nhận xóa "' + list[idx] + '"', 'warning');
+          continue;
         } else {
+          pendingDelete = -1;
           const sm = rest.match(/^(\d+)\s+(.+)$/);
-          if (!sm) { alert('Cú pháp: sua <số> <tên mới>. Vd: sua 2 Máy 1 + Máy 3'); continue; }
+          if (!sm) { showToast('Cú pháp: sua <số> <tên mới>. Vd: sua 2 Máy 1 + Máy 3', 'warning'); continue; }
           const idx = parseInt(sm[1], 10) - 1;
-          if (idx < 0 || idx >= list.length) { alert('Số thứ tự không đúng.'); continue; }
+          if (idx < 0 || idx >= list.length) { showToast('Số thứ tự không đúng.', 'warning'); continue; }
           list[idx] = sm[2].trim();
+          showToast('Đã cập nhật mục ' + (idx + 1), 'success');
         }
       }
       const cfg = loadStorage('bv_app_config', {}) || {};
