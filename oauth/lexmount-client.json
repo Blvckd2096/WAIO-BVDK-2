@@ -1,0 +1,11 @@
+{
+  "client_id": "https://blvckd2096.github.io/WAIO-BVDK-2/oauth/lexmount-client.json",
+  "client_name": "Tist (Muse)",
+  "client_uri": "https://muse.ai",
+  "application_type": "web",
+  "redirect_uris": ["https://agent.meta.ai/api/hatch/oauth/callback"],
+  "token_endpoint_auth_method": "none",
+  "grant_types": ["authorization_code", "refresh_token"],
+  "response_types": ["code"],
+  "scope": "browser.session:create"
+}
