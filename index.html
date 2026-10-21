@@ -1210,7 +1210,7 @@
         </div>
         <div class="flex items-end justify-between mt-1">
           <div>
-            <span class="text-2xl font-black">49</span>
+            <span class="text-2xl font-black">69</span>
             <span class="text-xs opacity-90 ml-1">Máy Bơm Vận Hành</span>
           </div>
           <div class="text-right">
@@ -1227,11 +1227,11 @@
       </div>
 
       <div class="flex space-x-1.5 overflow-x-auto hide-scrollbar text-[11px] font-semibold py-1">
-        <button onclick="filterPumps('all')" data-pump-filter="all" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-blue-600 text-white shrink-0 font-bold">Tất cả (49)</button>
+        <button onclick="filterPumps('all')" data-pump-filter="all" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-blue-600 text-white shrink-0 font-bold">Tất cả (69)</button>
         <button onclick="filterPumps('sinhhoat')" data-pump-filter="sinhhoat" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Bơm Nước Sạch (5)</button>
         <button onclick="filterPumps('bnt')" data-pump-filter="bnt" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Bơm Thải BNT (16)</button>
         <button onclick="filterPumps('ro')" data-pump-filter="ro" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Bơm Tăng Áp RO (6)</button>
-        <button onclick="filterPumps('be')" data-pump-filter="be" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Hệ Thống Bể (18)</button>
+        <button onclick="filterPumps('be')" data-pump-filter="be" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Hệ Thống Bể (18)</button> <button onclick="filterPumps('xlnt')" data-pump-filter="xlnt" class="pump-filter-btn px-3 py-1.5 rounded-xl bg-white text-slate-600 border shrink-0 font-medium">Trạm XLNT (20)</button>
       </div>
 
       <div id="pump-list" class="space-y-2 text-xs"></div>
@@ -3066,8 +3066,8 @@ window.FIREBASE_CONFIG = {
       (cfg ? '      <button onclick="disconnectSync()" class="px-4 py-2.5 bg-rose-50 text-rose-600 font-bold rounded-xl text-xs border border-rose-200 active:scale-95">Ngắt</button>' : '') +
       '    </div>' +
       '    <button onclick="unlockEmbeddedConfig()" title="Dùng config tích hợp sẵn trong app để kết nối đồng bộ" class="w-full text-center text-[10px] text-slate-300 hover:text-slate-500 py-1.5 active:scale-95 transition">Báo lỗi</button>' +
-      '    <!-- APP_VERSION: tăng số sau v. mỗi lần đẩy bản mới (v.1, v.2, v.3...) -->' +
-      '    <div class="flex justify-center pt-1"><span class="text-[10px] font-semibold tracking-wide text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">v.2</span></div>' +
+      '    <!-- Cập nhật cuối (định dạng: Cập nhật DD/MM HH:MM, sửa mỗi lần đẩy bản mới) -->' +
+      '    <div class="w-full text-center text-[10px] text-slate-400 py-0.5">Cập nhật 21/10 14:39</div>' +
       '    <div class="pt-2 border-t border-slate-200">' +
       '      <div class="text-[11px] font-bold text-slate-700 mb-1"><i class="fa-solid fa-key mr-1 text-amber-500"></i>Phân quyền xóa dữ liệu</div>' +
       '      <div id="sync-pin-status" class="text-[11px] mb-1.5"></div>' +
@@ -3938,7 +3938,15 @@ window.FIREBASE_CONFIG = {
       { id: 20, name: 'Bơm Nước Sạch GĐ2 (2 bơm)', gd: 2, type: 'sinhhoat', flow: '50 m³/h', power: '15 kW', loc: 'Phòng bơm nước sạch GĐ2', status: 'running', note: 'Áp lực 4.6 bar' },
       { id: 21, name: 'Bơm Tăng Áp RO Zone 1 (2 bơm)', gd: 2, type: 'ro', flow: '10 m³/h', power: '3 kW', loc: 'Tầng 6 zone 1', status: 'running', note: 'Cấp nước chạy thận' },
       { id: 22, name: 'Bơm Tăng Áp RO Zone 3 (4 bơm)', gd: 2, type: 'ro', flow: '10 m³/h', power: '3 kW', loc: 'Tầng 6 zone 3', status: 'running', note: 'Chạy ổn định' },
-      { id: 23, name: 'Bơm Tưới Cây (2 bơm)', gd: 2, type: 'sinhhoat', flow: '50 m³/h', power: '15 kW', loc: 'Phòng bơm PCCC', status: 'standby', note: 'Chế độ dự phòng' }
+      { id: 23, name: 'Bơm Tưới Cây (2 bơm)', gd: 2, type: 'sinhhoat', flow: '50 m³/h', power: '15 kW', loc: 'Phòng bơm PCCC', status: 'standby', note: 'Chế độ dự phòng' },
+      { id: 24, name: 'Bơm chìm P01 (2 bơm)', gd: 0, type: 'xlnt', flow: '50–55 m³/h', power: '2,2 kW', loc: 'Bể gom (T-01)', status: 'running', note: 'Bơm nước thải sang bể điều hòa' },
+      { id: 25, name: 'Bơm chìm P02 (2 bơm)', gd: 0, type: 'xlnt', flow: '—', power: '2,2 kW', loc: 'Bể điều hòa (T-02)', status: 'running', note: 'Bơm nước thải sang bể thiếu khí' },
+      { id: 26, name: 'Bơm chìm bùn P03 (2 bơm)', gd: 0, type: 'xlnt', flow: '—', power: '2,2 kW', loc: 'Bể MBR (T-06)', status: 'running', note: 'Bùn MBR sang bể chứa bùn, tuần hoàn thiếu khí/hiếu khí' },
+      { id: 27, name: 'Bơm bùn hồi lưu P06 (2 bơm)', gd: 0, type: 'xlnt', flow: '—', power: 'Chưa rõ', loc: 'Bể MBR (T-06)', status: 'running', note: 'Tuần hoàn bùn (chưa xác định công suất)' },
+      { id: 28, name: 'Bơm hút màng BH (4 bơm)', gd: 0, type: 'xlnt', flow: '—', power: '2,2 kW', loc: 'Bể MBR (T-06)', status: 'running', note: 'Hút nước sau xử lý qua màng MBR' },
+      { id: 29, name: 'Bơm rửa màng BC/BR (2 bơm)', gd: 0, type: 'xlnt', flow: '—', power: '2,2 kW', loc: 'Bể MBR (T-06)', status: 'running', note: 'Rửa màng MBR' },
+      { id: 30, name: 'Bơm định lượng hóa chất DP1–DP4 (4 bơm)', gd: 0, type: 'xlnt', flow: '30–50 lít/h', power: '0,25 kW', loc: 'Hệ thống hóa chất (HC1–HC4)', status: 'running', note: 'Châm NaOH, H2SO4, dinh dưỡng, Javel' },
+      { id: 31, name: 'Bơm định lượng CIP DP5–DP6 (2 bơm)', gd: 0, type: 'xlnt', flow: '—', power: '0,74 kW', loc: 'Hệ thống CIP màng MBR', status: 'running', note: 'Rửa hóa chất màng MBR' }
     ];
 
     const TANKS_DATA = [
@@ -4046,6 +4054,11 @@ window.FIREBASE_CONFIG = {
     let deviceTypes = loadStorage('bv_device_types', INITIAL_DEVICE_TYPES);
     let departments = loadStorage('bv_departments', INITIAL_DEPARTMENTS);
     let pumps = loadStorage('bv_pumps', DEFAULT_PUMPS);
+    // Bổ sung bơm trạm XLNT (mục IV) cho dữ liệu đã lưu từ bản cũ (chưa có XLNT)
+    if (Array.isArray(pumps) && !pumps.some(p => p.type === 'xlnt')) {
+      const xlnt = DEFAULT_PUMPS.filter(p => p.type === 'xlnt');
+      if (xlnt.length) { pumps = pumps.concat(xlnt); saveStorage('bv_pumps', pumps); }
+    }
     let tntGd1 = loadStorage('bv_tnt_gd1', DEFAULT_TNT_GD1);
     let tntGd2 = loadStorage('bv_tnt_gd2', DEFAULT_TNT_GD2);
     let incidents = loadStorage('bv_incidents', DEFAULT_INCIDENTS);
@@ -7382,6 +7395,22 @@ ${isChief() ? `
       showToast('Đã lưu trạng thái và ghi chú máy bơm!');
     }
 
+    function cyclePumpStatus(pumpId) {
+      const order = ['running', 'standby', 'repairing'];
+      const labels = { running: 'Đang chạy', standby: 'Tắt', repairing: 'Lỗi' };
+      pumps = pumps.map(p => {
+        if (p.id === pumpId) {
+          const idx = order.indexOf(p.status);
+          p.status = order[(idx + 1) % order.length];
+        }
+        return p;
+      });
+      saveStorage('bv_pumps', pumps);
+      renderPumps();
+      const p = pumps.find(x => x.id === pumpId);
+      if (p) showToast(p.name + ': ' + labels[p.status]);
+    }
+
     function renderPumps() {
       const search = (document.getElementById('pump-search')?.value || '').toLowerCase();
       const container = document.getElementById('pump-list');
@@ -7415,33 +7444,21 @@ ${isChief() ? `
             <div>
               <div class="flex items-center space-x-1.5">
                 <span class="font-extrabold text-slate-900">${p.name}</span>
-                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold ${p.gd === 1 ? 'bg-slate-100 text-slate-700' : 'bg-indigo-50 text-indigo-700'}">GĐ${p.gd}</span>
+                <span class="px-1.5 py-0.2 rounded text-[9px] font-bold ${p.gd === 1 ? 'bg-slate-100 text-slate-700' : 'bg-indigo-50 text-indigo-700'}">${p.type === 'xlnt' ? 'XLNT' : 'GĐ' + p.gd}</span>
               </div>
               <div class="text-[11px] text-slate-500"><i class="fa-solid fa-location-dot text-[10px] mr-1"></i>${p.loc}</div>
               <div class="text-[10px] text-slate-400">Lưu lượng: ${p.flow} | Công suất: ${p.power}</div>
             </div>
-            ${isChief() ? `<button onclick="openEditPumpModal(${p.id})" class="px-2.5 py-1 rounded-xl text-[10px] font-bold flex items-center space-x-1 shrink-0 ${
+            <div class="flex items-center space-x-1 shrink-0"><button onclick="cyclePumpStatus(${p.id})" class="px-2.5 py-1 rounded-xl text-[10px] font-bold ${
               p.status === 'running' ? 'bg-emerald-100 text-emerald-800' :
               p.status === 'warning' ? 'bg-amber-100 text-amber-800' :
               p.status === 'repairing' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600'
-            }">
-              <span>${
+            }">${
                 p.status === 'running' ? 'Đang chạy' :
-                p.status === 'warning' ? 'Cần bảo dưỡng' :
-                p.status === 'repairing' ? 'Đang sửa' : 'Dự phòng / Tắt'
-              }</span>
-              <i class="fa-solid fa-pencil text-[9px]"></i>
-            </button>` : `<span class="px-2.5 py-1 rounded-xl text-[10px] font-bold flex items-center space-x-1 shrink-0 ${
-              p.status === 'running' ? 'bg-emerald-100 text-emerald-800' :
-              p.status === 'warning' ? 'bg-amber-100 text-amber-800' :
-              p.status === 'repairing' ? 'bg-rose-100 text-rose-800' : 'bg-slate-100 text-slate-600'
-            }">
-              <span>${
-                p.status === 'running' ? 'Đang chạy' :
-                p.status === 'warning' ? 'Cần bảo dưỡng' :
-                p.status === 'repairing' ? 'Đang sửa' : 'Dự phòng / Tắt'
-              }</span>
-            </span>`}
+                p.status === 'standby' ? 'Tắt' :
+                p.status === 'repairing' ? 'Lỗi' :
+                p.status === 'warning' ? 'Cần bảo dưỡng' : 'Tắt'
+              }</button>${isChief() ? `<button onclick="openEditPumpModal(${p.id})" title="Sửa ghi chú" class="w-6 h-6 rounded-lg bg-slate-100 text-slate-500 flex items-center justify-center active:scale-95 shrink-0"><i class="fa-solid fa-pencil text-[9px]"></i></button>` : ''}</div>
           </div>
           ${p.note ? `<div class="text-[11px] text-blue-700 font-medium bg-blue-50/60 p-1.5 rounded-lg border border-blue-100 flex items-center"><i class="fa-solid fa-circle-info text-[10px] mr-1 text-blue-500"></i>${p.note}</div>` : ''}
         </div>
