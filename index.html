@@ -374,6 +374,23 @@
             <input type="text" id="xlnt-notes" placeholder="Ghi chú cụ thể nếu có hạng mục bất thường..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
           </div>
         </div>
+      <button onclick="saveChecklistToLog()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center space-x-2 active:scale-[0.99] transition">
+        <i class="fa-solid fa-floppy-disk text-base"></i>
+        <span>Lưu Nhật Ký Ca</span>
+      </button>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Riêng — Trạm XLNT
+          </h4>
+          <div class="flex items-center gap-3">
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteGroupInspectionHistory('xlnt')">Xóa hết mục này</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
+            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory('xlnt')">Xem tất cả</span>
+          </div>
+        </div>
+        <div id="inspection-history-xlnt" class="space-y-2 text-xs"></div>
+      </div>
       </div>
 
       <!-- FORM 1.2: CẤP NƯỚC SINH HOẠT -->
@@ -559,6 +576,23 @@
           </div>
           <input type="text" id="cn-notes" placeholder="Ghi chú thêm về hệ thống cấp nước..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
         </div>
+      <button onclick="saveChecklistToLog()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center space-x-2 active:scale-[0.99] transition">
+        <i class="fa-solid fa-floppy-disk text-base"></i>
+        <span>Lưu Nhật Ký Ca</span>
+      </button>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Riêng — Cấp Nước
+          </h4>
+          <div class="flex items-center gap-3">
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteGroupInspectionHistory('capnuoc')">Xóa hết mục này</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
+            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory('capnuoc')">Xem tất cả</span>
+          </div>
+        </div>
+        <div id="inspection-history-capnuoc" class="space-y-2 text-xs"></div>
+      </div>
       </div>
 
       <!-- FORM 1.3: HỆ THỐNG RO -->
@@ -652,6 +686,23 @@
             <input type="text" id="ro-notes" placeholder="Ghi chú về chất lượng nước RO hoặc màng lọc..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
           </div>
         </div>
+      <button onclick="saveChecklistToLog()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center space-x-2 active:scale-[0.99] transition">
+        <i class="fa-solid fa-floppy-disk text-base"></i>
+        <span>Lưu Nhật Ký Ca</span>
+      </button>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Riêng — Trạm RO
+          </h4>
+          <div class="flex items-center gap-3">
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteGroupInspectionHistory('ro')">Xóa hết mục này</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
+            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory('ro')">Xem tất cả</span>
+          </div>
+        </div>
+        <div id="inspection-history-ro" class="space-y-2 text-xs"></div>
+      </div>
       </div>
 
       <!-- FORM 1.4: BƠM NƯỚC THẢI (TNT 1-7 GĐ1 & TNT 1-9 GĐ2) -->
@@ -725,6 +776,23 @@
           </div>
           <input type="text" id="nt-notes" placeholder="Ghi chú tổng hợp tình trạng bơm thoát nước thải..." class="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs">
         </div>
+      <button onclick="saveChecklistToLog()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center space-x-2 active:scale-[0.99] transition">
+        <i class="fa-solid fa-floppy-disk text-base"></i>
+        <span>Lưu Nhật Ký Ca</span>
+      </button>
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
+        <div class="flex items-center justify-between">
+          <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center">
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Riêng — Bơm Thải
+          </h4>
+          <div class="flex items-center gap-3">
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteGroupInspectionHistory('nuocthai')">Xóa hết mục này</span>
+            <span class="chief-only w-px h-3.5 bg-slate-300"></span>
+            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory('nuocthai')">Xem tất cả</span>
+          </div>
+        </div>
+        <div id="inspection-history-nuocthai" class="space-y-2 text-xs"></div>
+      </div>
       </div>
 
       <!-- FORM 1.5: BỂ TÁCH MỠ -->
@@ -793,26 +861,26 @@
             </div>
           </div>
         </div>
-      </div>
-
       <button onclick="saveChecklistToLog()" class="w-full py-3.5 bg-blue-600 hover:bg-blue-700 text-white font-extrabold rounded-2xl shadow-lg shadow-blue-200 flex items-center justify-center space-x-2 active:scale-[0.99] transition">
         <i class="fa-solid fa-floppy-disk text-base"></i>
         <span>Lưu Nhật Ký Ca</span>
       </button>
-
       <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 space-y-2.5">
         <div class="flex items-center justify-between">
           <h4 class="font-bold text-xs text-slate-900 uppercase tracking-wider flex items-center">
-            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Kiểm Tra Gần Nhất
+            <i class="fa-solid fa-clock-rotate-left text-slate-400 mr-1.5"></i>Lịch Sử Riêng — Bể Tách Mỡ
           </h4>
           <div class="flex items-center gap-3">
-            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteAllInspectionHistory()">Xóa hết</span>
+            <span class="chief-only text-[11px] text-rose-500 font-semibold cursor-pointer px-1 py-0.5" onclick="deleteGroupInspectionHistory('tachmo')">Xóa hết mục này</span>
             <span class="chief-only w-px h-3.5 bg-slate-300"></span>
-            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory()">Xem tất cả</span>
+            <span class="text-[11px] text-blue-600 font-semibold cursor-pointer" onclick="viewAllInspectionHistory('tachmo')">Xem tất cả</span>
           </div>
         </div>
-        <div id="inspection-history-list" class="space-y-2 text-xs"></div>
+        <div id="inspection-history-tachmo" class="space-y-2 text-xs"></div>
       </div>
+      </div>
+
+
     </section>
 
     <!-- ================= TAB 2: NHẬT KÝ HÓA CHẤT & KHO HÓA CHẤT (TỐI ƯU TƯƠNG TỰ KHO VẬT TƯ) ================= -->
@@ -2999,7 +3067,7 @@ window.FIREBASE_CONFIG = {
       '    </div>' +
       '    <button onclick="unlockEmbeddedConfig()" title="Dùng config tích hợp sẵn trong app để kết nối đồng bộ" class="w-full text-center text-[10px] text-slate-300 hover:text-slate-500 py-1.5 active:scale-95 transition">Báo lỗi</button>' +
       '    <!-- APP_VERSION: tăng số sau v. mỗi lần đẩy bản mới (v.1, v.2, v.3...) -->' +
-      '    <div class="flex justify-center pt-1"><span class="text-[10px] font-semibold tracking-wide text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">v.1</span></div>' +
+      '    <div class="flex justify-center pt-1"><span class="text-[10px] font-semibold tracking-wide text-slate-400 bg-slate-100 rounded-full px-2.5 py-0.5">v.2</span></div>' +
       '    <div class="pt-2 border-t border-slate-200">' +
       '      <div class="text-[11px] font-bold text-slate-700 mb-1"><i class="fa-solid fa-key mr-1 text-amber-500"></i>Phân quyền xóa dữ liệu</div>' +
       '      <div id="sync-pin-status" class="text-[11px] mb-1.5"></div>' +
@@ -6978,6 +7046,7 @@ ${isChief() ? `
       };
 
       inspectionHistory.unshift(newLog);
+      if (typeof inspHistPageByGroup !== 'undefined') inspHistPageByGroup[activeSub] = 1;
       saveStorage('bv_inspection_history', inspectionHistory);
       captureChecklistState();
       renderInspectionHistory();
@@ -7006,18 +7075,81 @@ ${isChief() ? `
       `;
     }
 
+    // --- Nhật ký giao ca tách riêng theo từng mục (dữ liệu cũ giữ nguyên, xếp nhóm theo tên hệ thống) ---
+    const INSPECTION_GROUPS = [
+      { key: 'xlnt', label: 'Trạm XLNT', names: ['Trạm XLNT'] },
+      { key: 'capnuoc', label: 'Cấp Nước', names: ['Cấp Nước Sinh Hoạt', 'Cấp Nước'] },
+      { key: 'ro', label: 'Trạm RO', names: ['Hệ Thống Lọc RO', 'Trạm RO'] },
+      { key: 'nuocthai', label: 'Bơm Thải', names: ['Bơm Thoát Nước Thải (TNT)', 'Bơm Thải', 'Bơm TNT'] },
+      { key: 'tachmo', label: 'Bể Tách Mỡ', names: ['Bể Tách Mỡ Dinh Dưỡng', 'Bể Tách Mỡ'] }
+    ];
+    function inspectionGroupOf(item) {
+      const sys = (item && item.system) || '';
+      for (const g of INSPECTION_GROUPS) if (g.names.indexOf(sys) !== -1) return g;
+      if (sys.indexOf('XLNT') !== -1) return INSPECTION_GROUPS[0];
+      if (sys.indexOf('Cấp') !== -1) return INSPECTION_GROUPS[1];
+      if (sys.indexOf('RO') !== -1) return INSPECTION_GROUPS[2];
+      if (sys.indexOf('Thoát') !== -1 || sys.indexOf('Thải') !== -1 || sys.indexOf('TNT') !== -1) return INSPECTION_GROUPS[3];
+      if (sys.indexOf('Tách Mỡ') !== -1) return INSPECTION_GROUPS[4];
+      return null;
+    }
+    function inspectionGroupsOf(list) {
+      const groups = INSPECTION_GROUPS.map(g => ({ key: g.key, label: g.label, items: [] }));
+      const other = { key: 'khac', label: 'Mục khác', items: [] };
+      (list || []).forEach(item => {
+        const g = inspectionGroupOf(item);
+        if (g) groups.find(x => x.key === g.key).items.push(item);
+        else other.items.push(item);
+      });
+      if (other.items.length) groups.push(other);
+      return groups;
+    }
+    // Phân trang lịch sử riêng: 10 mục/trang, mỗi mục nhớ trang riêng của nó.
+    let inspHistPageByGroup = { xlnt: 1, capnuoc: 1, ro: 1, nuocthai: 1, tachmo: 1 };
+    function histGoPageGroup(key, page) {
+      inspHistPageByGroup[key] = page;
+      renderInspectionHistory();
+    }
     function renderInspectionHistory() {
-      const container = document.getElementById('inspection-history-list');
-      if (!container) return;
-      if (!inspectionHistory || inspectionHistory.length === 0) {
-        container.innerHTML = '<div class="text-slate-400 py-3 text-center">Chưa có bản ghi kiểm tra nào</div>';
-        return;
-      }
-      const totalPages = Math.max(1, Math.ceil(inspectionHistory.length / HIST_PAGE_SIZE));
-      if (inspHistPage > totalPages) inspHistPage = totalPages;
-      if (inspHistPage < 1) inspHistPage = 1;
-      const items = inspectionHistory.slice((inspHistPage - 1) * HIST_PAGE_SIZE, inspHistPage * HIST_PAGE_SIZE);
-      container.innerHTML = items.map(inspHistCard).join('') + histPagerHtml('insp', inspHistPage, totalPages);
+      // Mỗi mục có 1 lịch sử riêng, gắn ngay trong form của mục đó.
+      const groups = inspectionGroupsOf(inspectionHistory);
+      groups.forEach(g => {
+        const container = document.getElementById('inspection-history-' + g.key);
+        if (!container) return;
+        if (!g.items.length) {
+          container.innerHTML = '<div class="text-slate-400 py-3 text-center">Chưa có bản ghi nào cho mục này</div>';
+          return;
+        }
+        const totalPages = Math.max(1, Math.ceil(g.items.length / 10));
+        let page = inspHistPageByGroup[g.key] || 1;
+        if (page > totalPages) page = totalPages;
+        if (page < 1) page = 1;
+        inspHistPageByGroup[g.key] = page;
+        const shown = g.items.slice((page - 1) * 10, page * 10);
+        const pager = totalPages > 1 ? '<div class="flex items-center justify-center gap-2 pt-1.5">' +
+          '<button onclick="histGoPageGroup(\'' + g.key + '\',' + (page - 1) + ')" ' + (page <= 1 ? 'disabled' : '') + ' class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] font-bold text-slate-600 active:scale-95 disabled:opacity-40">‹ Trước</button>' +
+          '<span class="text-[11px] font-bold text-slate-500">Trang ' + page + '/' + totalPages + '</span>' +
+          '<button onclick="histGoPageGroup(\'' + g.key + '\',' + (page + 1) + ')" ' + (page >= totalPages ? 'disabled' : '') + ' class="px-2.5 py-1 rounded-lg bg-slate-100 border border-slate-200 text-[11px] font-bold text-slate-600 active:scale-95 disabled:opacity-40">Tiếp ›</button></div>' : '';
+        container.innerHTML = shown.map(inspHistCard).join('') + pager;
+      });
+    }
+
+    function deleteGroupInspectionHistory(key) {
+      if (!isChief()) { showToast('Chỉ máy trưởng mới được xóa.'); return; }
+      const group = INSPECTION_GROUPS.find(g => g.key === key);
+      const label = group ? group.label : 'mục này';
+      const items = (inspectionHistory || []).filter(item => { const g = inspectionGroupOf(item); return g && g.key === key; });
+      if (!items.length) { showToast('Mục ' + label + ' chưa có bản ghi nào để xóa.'); return; }
+      requestDeletePin(function () {
+        askConfirm('Xóa lịch sử ' + label, 'Bạn có chắc muốn xóa <b>' + items.length + ' bản ghi của ' + label + '</b>? Chỉ xóa riêng mục này, các mục khác giữ nguyên. Không thể hoàn tác, và sẽ đồng bộ lên tất cả các máy.', function () {
+          inspectionHistory = inspectionHistory.filter(item => { const g = inspectionGroupOf(item); return !(g && g.key === key); });
+          saveStorage('bv_inspection_history', inspectionHistory);
+          renderInspectionHistory();
+          const m = document.getElementById('modal-all-history');
+          if (m && !m.classList.contains('hidden')) viewAllInspectionHistory(key);
+          showToast('Đã xóa lịch sử ' + label + '.');
+        });
+      });
     }
 
     function inspHistFullCard(item) {
@@ -7043,10 +7175,15 @@ ${isChief() ? `
       `;
     }
 
-    function viewAllInspectionHistory() {
+    function viewAllInspectionHistory(groupKey) {
       const container = document.getElementById('all-history-container');
       if (!container) return;
-      container.innerHTML = inspectionHistory.map(inspHistFullCard).join('');
+      let groups = inspectionGroupsOf(inspectionHistory).filter(g => g.items.length);
+      if (groupKey) groups = groups.filter(g => g.key === groupKey);
+      container.innerHTML = groups.map(g =>
+        '<div class="space-y-2"><h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wide pt-1">' + g.label + ' (' + g.items.length + ')</h4>' +
+        g.items.map(inspHistFullCard).join('') + '</div>'
+      ).join('<div class="border-t border-slate-100 my-1"></div>');
       openModal('modal-all-history');
     }
 
@@ -7070,7 +7207,11 @@ ${isChief() ? `
       if (filtered.length === 0) {
         container.innerHTML = '<div class="text-slate-400 py-4 text-center">Không có bản ghi kiểm tra nào trong khoảng thời gian đã chọn</div>';
       } else {
-        container.innerHTML = filtered.map(inspHistFullCard).join('');
+        const fGroups = inspectionGroupsOf(filtered).filter(g => g.items.length);
+        container.innerHTML = fGroups.map(g =>
+          '<div class="space-y-2"><h4 class="font-extrabold text-slate-900 text-xs uppercase tracking-wide pt-1">' + g.label + ' (' + g.items.length + ')</h4>' +
+          g.items.map(inspHistFullCard).join('') + '</div>'
+        ).join('<div class="border-t border-slate-100 my-1"></div>');
       }
       showToast(`Đã lọc được ${filtered.length} lần kiểm tra theo mốc thời gian!`);
     }
